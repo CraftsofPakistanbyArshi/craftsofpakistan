@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crafts of Pakistan by Arshi</title>
+  <style>
+    :root {
+      --sand: #c19a6b;
+      --light: #fff8f0;
+      --accent: #274472; /* calm dark blue */
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #333;
+      background-color: var(--light);
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: var(--accent);
+      color: var(--white);
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: var(--sand);
+      text-align: center;
+      padding: 12px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: var(--white);
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      height: 100vh;
+      background: url('background.jpg') center center no-repeat fixed;
+      background-size: contain; /* fits the whole image */
+      background-color: var(--sand); /* fills behind if image isn’t full */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      text-shadow: 1px 1px 4px #000;
+    }
+
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+    }
+
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: var(--accent);
+      color: var(--white);
+      text-align: center;
+      padding: 15px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .story {
+      background-color: var(--white);
+      padding: 80px 20px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .story.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .story h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    .story p {
+      max-width: 700px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+      font-size: 1.1em;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    Crafts of Pakistan by Arshi
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="hero">
+    <h1>Welcome to Crafts of Pakistan</h1>
+    <p>Handwoven beauty from the heart of tradition.</p>
+  </div>
+
+  <section class="story">
+    <h2>Our Story</h2>
+    <p>
+      <span class="highlight">Crafts of Pakistan by Arshi</span> celebrates the heritage of handmade artistry.
+      Every piece — whether a basket, mat, or tray — is crafted from natural date palm leaves and straw,
+      using techniques passed down through generations of skilled artisans.
+    </p>
+    <p>
+      What began as a small family passion has grown into a mission:
+      to preserve Pakistan’s traditional crafts while empowering the hands that make them.
+    </p>
+  </section>
+
+
+  <footer>
+    &copy; 2025 Crafts of Pakistan by Arshi
+  </footer>
+
+  <script>
+    const storySection = document.querySelector('.story');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(storySection);
+  </script>
+
+</body>
+</html>

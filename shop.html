@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Crafts of Pakistan by Arshi</title>
+  <style>
+    :root {
+      --sand: #c19a6b;
+      --light: #fff8f0;
+      --accent: #274472;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: var(--light);
+      color: #333;
+    }
+
+    header {
+      background-color: var(--accent);
+      color: var(--white);
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 28px;
+    }
+
+    nav {
+      background-color: var(--sand);
+      text-align: center;
+      padding: 12px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: var(--white);
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 40px 20px;
+    }
+
+    .product {
+      background-color: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      width: 220px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product h3 {
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    .product p {
+      margin: 5px 0;
+    }
+
+    footer {
+      background-color: var(--accent);
+      color: var(--white);
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Crafts of Pakistan by Arshi</header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <section class="products">
+    <div class="product">
+      <img src="basket1.jpg" alt="Handwoven Basket">
+      <h3>Handwoven Basket</h3>
+      <p>Rs. 1200</p>
+    </div>
+
+    <div class="product">
+      <img src="mat1.jpg" alt="Decorative Mat">
+      <h3>Decorative Mat</h3>
+      <p>Rs. 850</p>
+    </div>
+
+    <div class="product">
+      <img src="tray1.jpg" alt="Palm Leaf Tray">
+      <h3>Palm Leaf Tray</h3>
+      <p>Rs. 950</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Crafts of Pakistan by Arshi
+  </footer>
+
+  <script>
+    const products = document.querySelectorAll('.product');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    products.forEach(p => observer.observe(p));
+  
+    .product {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .product.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </script>
+
+</body>
+</html>
