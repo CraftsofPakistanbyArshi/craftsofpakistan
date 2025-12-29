@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<title>Cart | Crafts of Pakistan by Arshi</title>
+
+<style>
+:root {
+  --sand:#c19a6b;
+  --light:#fff8f0;
+  --accent:#274472;
+  --white:#ffffff;
+}
+
+body {
+  font-family:"Segoe UI", Arial;
+  background:var(--light);
+  margin:0;
+}
+
+header, footer {
+  background:var(--accent);
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+
+nav {
+  background:var(--sand);
+  text-align:center;
+  padding:12px;
+}
+
+nav a {
+  margin:0 15px;
+  color:white;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.cart {
+  max-width:700px;
+  margin:40px auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  min-height:200px;
+}
+
+.item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #ddd;
+}
+
+.remove {
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* quantity */
+.qty {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qty button {
+  border:none;
+  background:#eee;
+  padding:4px 8px;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+.total {
+  margin-top:15px;
+}
+
+/* buttons */
+.actions {
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.clear {
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.empty {
+  text-align:center;
+  margin-top:60px;
+  color:#555;
+  font-weight:normal;
+}
+
+/* toast */
+#toast {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:var(--accent);
+  color:white;
+  padding:12px 18px;
+  border-radius:8px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.3s;
+}
+#toast.show {
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<header>Crafts of Pakistan by Arshi</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Cart (<span id="cart-count">0</span>)
+  </a>
+</nav>
+
+<div class="cart">
+  <h2>Your Cart</h2>
+
+  <div id="items"></div>
+  <div id="total" class="total"></div>
+
+  <div class="actions" id="actions">
+    <button class="clear" onclick="clearCart()">Clear Cart</button>
+    <a href="checkout.html">
+      <button class="clear">Proceed to Checkout</button>
+    </a>
+  </div>
+</div>
+
+<footer>© 2025 Crafts of Pakistan by Arshi</footer>
+
+<div id="toast"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cart = cart.map(i => ({ ...i, qty: i.qty || 1 }));
+localStorage.setItem("cart", JSON.stringify(cart));
+
+function updateCartCount(){
+  document.getElementById("cart-count").innerText = cart.length;
+}
+
+function renderCart(){
+  const items = document.getElementById("items");
+  const totalEl = document.getElementById("total");
+  const actions = document.getElementById("actions");
+
+  items.innerHTML = "";
+  totalEl.innerHTML = "";
+
+  if(cart.length === 0){
+    items.innerHTML = `<div class="empty">Cart is empty</div>`;
+    actions.style.display = "none";
+    updateCartCount();
+    return;
+  }
+
+  actions.style.display = "flex";
+
+  let total = 0;
+
+  cart.forEach((item, i) => {
+    total += item.price * item.qty;
+
+    items.innerHTML += `
+      <div class="item">
+        <span>${item.name} — Rs. ${item.price}</span>
+
+        <div class="qty">
+          <button onclick="changeQty(${i}, -1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${i}, 1)">+</button>
+        </div>
+
+        <span class="remove" onclick="removeItem(${i})">
+          <i class="fa-solid fa-trash"></i>
+        </span>
+      </div>
+    `;
+  });
+
+  totalEl.innerText = "Total: Rs. " + total;
+  updateCartCount();
+}
+
+function changeQty(i, d){
+  cart[i].qty += d;
+  if(cart[i].qty < 1) cart[i].qty = 1;
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+  showToast("Item removed");
+}
+
+function clearCart(){
+  cart = [];
+  localStorage.removeItem("cart");
+  renderCart();
+  showToast("Cart cleared");
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+renderCart();
+</script>
+
+</body>
+</html>
