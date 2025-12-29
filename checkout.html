@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Font Awesome (for cart icon) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<title>Checkout | Crafts of Pakistan by Arshi</title>
+
+<style>
+:root {
+  --sand:#c19a6b;
+  --light:#fff8f0;
+  --accent:#274472;
+  --white:#ffffff;
+}
+
+body {
+  font-family:"Segoe UI", Arial;
+  background:var(--light);
+  margin:0;
+}
+
+header, footer {
+  background:var(--accent);
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+
+nav {
+  background:var(--sand);
+  text-align:center;
+  padding:12px;
+}
+
+nav a {
+  margin:0 15px;
+  color:white;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.checkout {
+  max-width:600px;
+  margin:40px auto;
+  background:white;
+  padding:25px;
+  border-radius:10px;
+}
+
+.checkout h2 {
+  text-align:center;
+  color:var(--accent);
+}
+
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+button {
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:12px;
+  width:100%;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+button:hover {
+  background:var(--sand);
+}
+
+.summary {
+  margin-top:20px;
+  font-size:0.95em;
+}
+</style>
+</head>
+
+<body>
+
+<header>Crafts of Pakistan by Arshi</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">
+    <i class="fa-solid fa-cart-shopping"></i> Cart
+  </a>
+</nav>
+
+<div class="checkout">
+  <h2>Checkout</h2>
+
+  <input id="name" placeholder="Your Name" required>
+  <input id="phone" placeholder="Phone Number" required>
+  <textarea id="address" placeholder="Delivery Address" rows="3" required></textarea>
+
+  <div class="summary" id="summary"></div>
+
+  <button onclick="placeOrder()">Place Order via WhatsApp</button>
+</div>
+
+<footer>© 2025 Crafts of Pakistan by Arshi</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const summary = document.getElementById("summary");
+
+let total = 0;
+let text = "<strong>Order Summary:</strong><br>";
+
+cart.forEach(item => {
+  total += item.price * item.qty;
+  text += `• ${item.name} × ${item.qty} — Rs. ${item.price * item.qty}<br>`;
+});
+
+text += `<br><strong>Total: Rs. ${total}</strong>`;
+summary.innerHTML = text;
+
+function placeOrder(){
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if(!name || !phone || !address){
+    alert("Please fill all fields");
+    return;
+  }
+
+  let message =
+`New Order 📦
+Name: ${name}
+Phone: ${phone}
+Address: ${address}
+
+Items:
+`;
+
+  cart.forEach(item=>{
+    message += `- ${item.name} × ${item.qty} (Rs. ${item.price * item.qty})\n`;
+  });
+
+  message += `\nTotal: Rs. ${total}`;
+
+  // WhatsApp number
+  const whatsappNumber = "923215282064";
+
+  window.open(
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
+
+  localStorage.removeItem("cart");
+}
+</script>
+
+</body>
+</html>
