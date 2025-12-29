@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <title>Crafts of Pakistan by Arshi</title>
+
   <style>
     :root {
       --sand: #c19a6b;
       --light: #fff8f0;
-      --accent: #274472; /* calm dark blue */
+      --accent: #274472;
       --white: #ffffff;
     }
 
@@ -55,8 +59,8 @@
     .hero {
       height: 100vh;
       background: url('background.jpg') center center no-repeat fixed;
-      background-size: contain; /* fits the whole image */
-      background-color: var(--sand); /* fills behind if image isn’t full */
+      background-size: contain;
+      background-color: var(--sand);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -64,7 +68,6 @@
       color: var(--white);
       text-shadow: 1px 1px 4px #000;
     }
-
 
     .hero h1 {
       font-size: 3em;
@@ -122,57 +125,61 @@
       line-height: 1.6;
       font-size: 1.1em;
     }
-
   </style>
 </head>
+
 <body>
 
-  <header>
-    Crafts of Pakistan by Arshi
-  </header>
+<header>Crafts of Pakistan by Arshi</header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">
+  <i class="fa-solid fa-cart-shopping"></i>
+  Cart (<span id="cart-count">0</span>)
+ </a>
+</nav>
 
-  <div class="hero">
-    <h1>Welcome to Crafts of Pakistan</h1>
-    <p>Handwoven beauty from the heart of tradition.</p>
-  </div>
+<div class="hero">
+  <h1>Welcome to Crafts of Pakistan</h1>
+  <p>Handwoven beauty from the heart of tradition.</p>
+</div>
 
-  <section class="story">
-    <h2>Our Story</h2>
-    <p>
-      <span class="highlight">Crafts of Pakistan by Arshi</span> celebrates the heritage of handmade artistry.
-      Every piece — whether a basket, mat, or tray — is crafted from natural date palm leaves and straw,
-      using techniques passed down through generations of skilled artisans.
-    </p>
-    <p>
-      What began as a small family passion has grown into a mission:
-      to preserve Pakistan’s traditional crafts while empowering the hands that make them.
-    </p>
-  </section>
+<section class="story">
+  <h2>Our Story</h2>
+  <p>
+    <span class="highlight">Crafts of Pakistan by Arshi</span> celebrates the heritage of handmade artistry.
+    Every piece is crafted from natural date palm leaves and straw, using techniques passed down through generations.
+  </p>
+  <p>
+    What began as a small family passion has grown into a mission:
+    preserving Pakistan’s traditional crafts while empowering artisans.
+  </p>
+</section>
 
+<footer>&copy; 2025 Crafts of Pakistan by Arshi</footer>
 
-  <footer>
-    &copy; 2025 Crafts of Pakistan by Arshi
-  </footer>
+<script>
+  /* story animation */
+  const storySection = document.querySelector('.story');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.2 });
+  observer.observe(storySection);
 
-  <script>
-    const storySection = document.querySelector('.story');
+  /* cart count sync */
+  function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const el = document.getElementById("cart-count");
+    if (el) el.innerText = cart.length;
+  }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
-
-    observer.observe(storySection);
-  </script>
+  updateCartCount();
+</script>
 
 </body>
 </html>
