@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Crafts of Pakistan by Arshi</title>
+
   <style>
     :root {
       --sand: #c19a6b;
@@ -77,12 +78,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1em;
-      transition: box-shadow 0.3s;
-    }
-
-    input:focus, textarea:focus {
-      box-shadow: 0 0 8px var(--sand);
-      outline: none;
     }
 
     button {
@@ -92,12 +87,6 @@
       padding: 12px 25px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1em;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: var(--sand);
     }
 
     footer {
@@ -113,74 +102,73 @@
     }
 
     .socials a {
-      display: inline-block;
       margin: 10px 15px;
+      color: var(--accent);
       text-decoration: none;
       font-size: 1.1em;
-      color: var(--accent);
-      transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .socials a:hover {
-      transform: scale(1.1);
-      color: var(--highlight);
+      color: var(--sand);
     }
-
-    .socials i {
-      margin-right: 8px;
-    }
-
   </style>
 </head>
+
 <body>
 
-  <header>Crafts of Pakistan by Arshi</header>
+<header>Crafts of Pakistan by Arshi</header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">
+  <i class="fa-solid fa-cart-shopping"></i>
+  Cart (<span id="cart-count">0</span>)
+ </a>
+</nav>
 
-  <section>
-    <h2>Contact Us</h2>
-    <p>We’d love to hear from you! Send us a message and we’ll get back as soon as we can.</p>
+<section>
+  <h2>Contact Us</h2>
+  <p>We’d love to hear from you! Send us a message and we’ll get back as soon as we can.</p>
 
-    <form action="https://formsubmit.co/craftsofpakistanbyarshi@gmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="thankyou.html">
-  
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+  <form action="https://formsubmit.co/craftsofpakistanbyarshi@gmail.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://craftsofpakistan.pk/thankyou.html">
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="message" rows="5" placeholder="Message" required></textarea>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
 
-      <button type="submit">Send Message</button>
-    </form>
+  <div style="margin-top:50px;">
+    <p>Email: craftsofpakistanbyarshi@gmail.com</p>
+    <p>Phone: +92 32152 82064</p>
 
+    <div class="socials">
+      <a href="https://wa.me/923215282064" target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="https://instagram.com/crafts_of_pakistan_by_arshi" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+    </div>
+  </div>
+</section>
 
-    <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:craftsofpakistanbyarshi@gmail.com">craftsofpakistanbyarshi@gmail.com</a></p>
-      <p>Phone: <a href="tel:+923215282064">+92 32152 82064</a></p>
+<footer>© 2025 Crafts of Pakistan by Arshi</footer>
 
-      <div class="socials">
-        <a href="https://wa.me/923215282064" target="_blank" class="whatsapp">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-        
-        <a href="https://instagram.com/crafts_of_pakistan_by_arshi" target="_blank" class="instagram">
-          <i class="fab fa-instagram"></i> Instagram
-        </a>
-      </div>
-  </section>
+<script>
+  function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const el = document.getElementById("cart-count");
+    if (el) el.innerText = cart.length;
+  }
 
-  <footer>
-    &copy; 2025 Crafts of Pakistan by Arshi
-  </footer>
+  updateCartCount();
+</script>
 
 </body>
 </html>
