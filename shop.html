@@ -1,159 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop | Crafts of Pakistan by Arshi</title>
-  <style>
-    :root {
-      --sand: #c19a6b;
-      --light: #fff8f0;
-      --accent: #274472;
-      --white: #ffffff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: var(--light);
-      color: #333;
-    }
+<title>Shop | Crafts of Pakistan by Arshi</title>
 
-    header {
-      background-color: var(--accent);
-      color: var(--white);
-      text-align: center;
-      padding: 30px 10px;
-      font-size: 28px;
-    }
+<style>
+:root {
+  --sand: #c19a6b;
+  --light: #fff8f0;
+  --accent: #274472;
+  --white: #ffffff;
+}
 
-    nav {
-      background-color: var(--sand);
-      text-align: center;
-      padding: 12px;
-    }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: var(--white);
-      font-weight: bold;
-      transition: color 0.3s;
-    }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color:#333;
+}
 
-    nav a:hover {
-      color: var(--accent);
-    }
+header {
+  background: var(--accent);
+  color: var(--white);
+  text-align:center;
+  padding:30px 10px;
+  font-size:28px;
+}
 
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      padding: 40px 20px;
-    }
+nav {
+  background: var(--sand);
+  text-align:center;
+  padding:12px;
+}
 
-    .product {
-      background-color: var(--white);
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      width: 220px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+nav a {
+  margin:0 15px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-    .product:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
+nav a:hover { color: var(--accent); }
 
-    .product img {
-      width: 100%;
-      border-radius: 10px;
-    }
+.products {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+  padding:40px 20px;
+}
 
-    .product h3 {
-      color: var(--accent);
-      margin-top: 10px;
-    }
+.product {
+  background:white;
+  border-radius:10px;
+  width:220px;
+  padding:15px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  opacity:0;
+  transform:translateY(30px);
+  transition:0.6s;
+}
 
-    .product p {
-      margin: 5px 0;
-    }
+.product.show {
+  opacity:1;
+  transform:translateY(0);
+}
 
-    footer {
-      background-color: var(--accent);
-      color: var(--white);
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-  </style>
+.product:hover {
+  transform:scale(1.05);
+}
+
+.product img {
+  width:100%;
+  border-radius:10px;
+}
+
+.product h3 {
+  color: var(--accent);
+  margin-top:10px;
+}
+
+.product p {
+  font-weight:bold;
+}
+
+.product button {
+  background: var(--accent);
+  color:white;
+  border:none;
+  padding:8px;
+  width:100%;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.product button:hover { background: var(--sand); }
+
+footer {
+  background: var(--accent);
+  color:white;
+  text-align:center;
+  padding:15px;
+  margin-top:30px;
+}
+
+/* TOAST */
+#toast {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background: var(--accent);
+  color:white;
+  padding:12px 18px;
+  border-radius:8px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.3s;
+  pointer-events:none;
+}
+#toast.show {
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
 </head>
+
 <body>
 
-  <header>Crafts of Pakistan by Arshi</header>
+<header>Crafts of Pakistan by Arshi</header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">
+  <i class="fa-solid fa-cart-shopping"></i>
+  Cart (<span id="cart-count">0</span>)
+ </a>
 
-  <section class="products">
-    <div class="product">
-      <img src="basket1.jpg" alt="Handwoven Basket">
-      <h3>Handwoven Basket</h3>
-      <p>Rs. 1200</p>
-    </div>
+</nav>
 
-    <div class="product">
-      <img src="mat1.jpg" alt="Decorative Mat">
-      <h3>Decorative Mat</h3>
-      <p>Rs. 850</p>
-    </div>
+<section class="products">
 
-    <div class="product">
-      <img src="tray1.jpg" alt="Palm Leaf Tray">
-      <h3>Palm Leaf Tray</h3>
-      <p>Rs. 950</p>
-    </div>
-  </section>
+<div class="product">
+  <img src="basket1.jpg">
+  <h3>Handwoven Basket</h3>
+  <p>Rs. 1200</p>
+  <button onclick="addToCart('Handwoven Basket',1200)">Add to Cart</button>
+</div>
 
-  <footer>
-    &copy; 2025 Crafts of Pakistan by Arshi
-  </footer>
+<div class="product">
+  <img src="mat1.jpg">
+  <h3>Decorative Mat</h3>
+  <p>Rs. 850</p>
+  <button onclick="addToCart('Decorative Mat',850)">Add to Cart</button>
+</div>
 
-  <script>
-    const products = document.querySelectorAll('.product');
+<div class="product">
+  <img src="tray1.jpg">
+  <h3>Palm Leaf Tray</h3>
+  <p>Rs. 950</p>
+  <button onclick="addToCart('Palm Leaf Tray',950)">Add to Cart</button>
+</div>
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
+</section>
 
-    products.forEach(p => observer.observe(p));
-  
-    .product {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+<footer>© 2025 Crafts of Pakistan by Arshi</footer>
 
-    .product.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </script>
+<div id="toast"></div>
+
+<script>
+// animation
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:0.2});
+document.querySelectorAll(".product").forEach(p=>observer.observe(p));
+
+// cart
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function updateCartCount(){
+  document.getElementById("cart-count").innerText = cart.length;
+}
+
+function addToCart(name, price){
+  cart.push({name,price});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  showToast("Added to cart");
+}
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.innerText=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+updateCartCount();
+</script>
 
 </body>
 </html>
