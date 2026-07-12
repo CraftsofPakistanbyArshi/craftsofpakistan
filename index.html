@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crafts of Pakistan — Handwoven Date Palm Leaf Craft</title>
+<meta name="description" content="Handcrafted baskets, mats, trays and homeware woven by hand from date palm leaves. Shipping across Pakistan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===================== TOKENS ===================== */
+  :root{
+    --sand:        #E7D9B8;
+    --card:        #F6EFDD;
+    --ink:         #2B2015;
+    --ink-soft:    #5B4B37;
+    --palm:        #3E5233;
+    --palm-dark:   #2A3823;
+    --clay:        #A6512B;
+    --gold:        #B6842F;
+    --line:        #CBB988;
+    --white:       #FFFBF2;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Karla', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius: 16px;
+    --container: 1200px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--sand); color:var(--ink);
+    font-family:var(--font-body); font-size:16px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--clay); outline-offset:3px; }
+  .wrap{ max-width:var(--container); margin:0 auto; padding:0 28px; }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; margin:0; color:var(--ink); }
+  p{ margin:0; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--clay); display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--clay); display:inline-block; }
+  .link-arrow{ display:inline-flex; align-items:center; gap:6px; font-weight:700; font-size:14px; text-decoration:none; }
+  .link-arrow .a{ transition:transform .2s ease; display:inline-block; }
+  .link-arrow:hover .a{ transform:translateX(4px); }
+
+  /* ===================== BUTTONS (Star Border) ===================== */
+  .btn{
+    display:inline-flex; position:relative; overflow:hidden;
+    border-radius:var(--radius); font-weight:700; font-size:14.5px;
+    text-decoration:none; cursor:pointer; border:none; background:transparent; padding:0;
+  }
+  .btn-inner{
+    position:relative; z-index:1; display:inline-flex; align-items:center; gap:10px;
+    margin:1.5px; padding:12.5px 24.5px; border-radius:calc(var(--radius) - 2px);
+    overflow:hidden; box-shadow:inset 0 0 0 1px rgba(182,132,47,.4);
+    transition: box-shadow .18s ease, transform .18s ease;
+  }
+  .btn:hover .btn-inner{ transform:translateY(-2px); }
+  .btn-inner::before{
+    content:""; position:absolute; inset:0; transform:scaleX(0); transform-origin:left;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1); z-index:-1;
+  }
+  .border-gradient-top, .border-gradient-bottom{
+    position:absolute; width:300%; height:75%; opacity:1; border-radius:50%; z-index:0; pointer-events:none;
+  }
+  .border-gradient-top{
+    top:-16px; left:-250%; background:radial-gradient(ellipse at center, var(--gold) 0%, var(--gold) 35%, transparent 72%);
+    animation:star-trail-top 3.4s linear infinite alternate;
+  }
+  .border-gradient-bottom{
+    bottom:-16px; right:-250%; background:radial-gradient(ellipse at center, var(--white) 0%, var(--white) 35%, transparent 72%);
+    animation:star-trail-bottom 3.4s linear infinite alternate;
+  }
+  @keyframes star-trail-top{ 0%{ transform:translate(0,0); opacity:1; } 100%{ transform:translate(100%,0); opacity:.15; } }
+  @keyframes star-trail-bottom{ 0%{ transform:translate(0,0); opacity:1; } 100%{ transform:translate(-100%,0); opacity:.15; } }
+
+  .btn-primary .btn-inner{ background:var(--clay); color:var(--white); }
+  .btn-primary .btn-inner::before{ background:var(--ink); }
+  .btn-primary:hover .btn-inner::before{ transform:scaleX(1); }
+  .btn-primary:hover .btn-inner{ box-shadow:0 8px 20px rgba(43,32,21,.3); }
+  .btn-ghost .btn-inner{ background:var(--card); color:var(--ink); border:1.3px solid var(--ink); margin:1.5px; }
+  .btn-ghost .btn-inner::before{ background:var(--ink); }
+  .btn-ghost:hover .btn-inner::before{ transform:scaleX(1); }
+  .btn-ghost:hover .btn-inner{ color:var(--white); }
+  .btn-block{ width:100%; }
+  .btn-block .btn-inner{ width:100%; justify-content:center; margin:1.5px 0; }
+  .btn[disabled]{ opacity:.5; cursor:not-allowed; pointer-events:none; }
+
+  /* ===================== SIGNATURE VISUAL: coiled rings ===================== */
+  /* Every "photo" in this build is a generated coil motif — a nod to how the
+     baskets are actually built, row by row, ring by ring. Swap the .media-fill
+     divs for <img> tags once real product photography is ready. */
+  .coil-visual{ width:100%; height:100%; position:relative; overflow:hidden; }
+  .coil-visual svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .coil-visual .core{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-style:italic; color:rgba(255,251,242,.9);
+    text-align:center; padding:16%; letter-spacing:.02em;
+  }
+
+  /* ===================== NAV ===================== */
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(231,217,184,0.92);
+    backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+  }
+  .navrow{ display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:var(--container); margin:0 auto; }
+  .logo{ font-family:var(--font-display); font-weight:700; font-size:21px; letter-spacing:.01em; text-decoration:none; display:flex; align-items:baseline; gap:2px; cursor:pointer; }
+  .logo .dot{ color:var(--clay); }
+  nav.links{ display:flex; gap:30px; font-size:14px; font-weight:600; overflow-x:auto; scrollbar-width:none; }
+  nav.links::-webkit-scrollbar{ display:none; }
+  nav.links a{ text-decoration:none; position:relative; padding-bottom:3px; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+  nav.links a::after{ content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--clay); transition:width .25s ease; }
+  nav.links a:hover::after, nav.links a.active::after{ width:100%; }
+  .navactions{ display:flex; align-items:center; gap:18px; }
+  .cart-btn{
+    display:flex; align-items:center; gap:8px; background:var(--ink); color:var(--white); border:none;
+    padding:10px 16px; border-radius:var(--radius); cursor:pointer;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.03em;
+    transition: transform .18s ease, background .18s ease;
+  }
+  .cart-btn:hover{ background:var(--palm-dark); transform:translateY(-1px); }
+  .cart-count{
+    background:var(--clay); color:var(--white); border-radius:50%; width:18px; height:18px;
+    display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:700;
+  }
+  @media (max-width:640px){
+    .navrow{ padding:14px 18px; gap:10px; flex-wrap:wrap; }
+    nav.links{ order:3; width:100%; gap:20px; font-size:13px; justify-content:flex-start; }
+    .logo{ font-size:18px; }
+  }
+
+  /* ===================== SCROLL REVEAL ===================== */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+
+  /* ===================== HERO (word stagger) ===================== */
+  .hero{ padding:88px 0 64px; overflow:hidden; }
+  .hero-grid{ max-width:760px; }
+  .hero h1{ font-size:clamp(38px,5vw,66px); line-height:1.05; letter-spacing:-.01em; overflow:hidden; }
+  .hero h1 .line{ display:block; overflow:hidden; }
+  .hero h1 .word{ display:inline-block; transform:translateY(110%); animation:riseUp .8s cubic-bezier(.2,.8,.2,1) forwards; }
+  .hero h1 em{ font-style:italic; color:var(--clay); font-weight:450; }
+  @keyframes riseUp{ to{ transform:translateY(0); } }
+  .hero p.lede{
+    font-size:18px; color:var(--ink-soft); max-width:46ch; margin:22px 0 32px;
+    opacity:0; animation:fadeIn .8s ease .5s forwards;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; opacity:0; animation:fadeIn .8s ease .65s forwards; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
+
+  /* ===================== MARQUEE ===================== */
+  .marquee{
+    background:var(--ink); color:var(--sand); overflow:hidden; padding:14px 0; white-space:nowrap;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .marquee-track{ display:inline-flex; animation:scrollmarq 32s linear infinite; }
+  .marquee-track span{ font-family:var(--font-mono); font-size:13px; letter-spacing:.05em; padding:0 26px; text-transform:uppercase; }
+  .marquee-track span::after{ content:"·"; margin-left:26px; color:var(--gold); }
+  @keyframes scrollmarq{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  /* ===================== SALE BANNER ===================== */
+  .sale-banner{
+    background:var(--clay); color:var(--white); text-align:center; padding:14px 20px;
+    font-family:var(--font-mono); font-size:13.5px; letter-spacing:.03em;
+  }
+  .sale-banner a{ text-decoration:underline; font-weight:700; }
+
+  /* ===================== SECTION HEADERS ===================== */
+  .section{ padding:80px 0; }
+  /* ===================== TEXT EFFECTS ===================== */
+  .fx-blur{ filter:blur(14px); opacity:0; transform:translateY(8px); transition:filter .9s cubic-bezier(.2,.8,.2,1), opacity .9s ease, transform .9s ease; }
+  .fx-blur.show{ filter:blur(0); opacity:1; transform:translateY(0); }
+
+  .fx-shiny{
+    background:linear-gradient(120deg, var(--ink) 40%, var(--gold) 50%, var(--ink) 60%);
+    background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shinySweep 3.6s linear infinite;
+  }
+  @keyframes shinySweep{ 0%{ background-position:150% 0; } 100%{ background-position:-70% 0; } }
+
+  .fx-gradient{
+    background:linear-gradient(90deg, var(--clay), var(--gold), var(--palm), var(--clay));
+    background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gradientDrift 9s ease infinite;
+  }
+  @keyframes gradientDrift{ 0%,100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } }
+
+  .rotate-word{ display:inline-block; color:var(--clay); font-style:italic; transition:opacity .32s ease, transform .32s ease; }
+
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:40px; flex-wrap:wrap; }
+  .section-head h2{ font-size:clamp(28px,3.4vw,40px); }
+  .section-head p{ color:var(--ink-soft); font-size:15.5px; max-width:46ch; margin-top:10px; }
+
+  /* ===================== PRODUCT GRID / CARDS ===================== */
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
+  @media (max-width:1080px){ .grid{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:760px){ .grid{ grid-template-columns:repeat(2,1fr); gap:16px; } }
+  @media (max-width:460px){
+    .grid{ grid-template-columns:repeat(2,1fr); gap:10px; }
+    .card-name{ font-size:15.5px; }
+    .card-desc{ display:none; }
+    .card-body{ padding:10px 10px 12px; gap:5px; }
+    .card-price{ font-size:13px; }
+    .add-btn{ padding:6px 9px; font-size:10.5px; }
+  }
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; display:flex; flex-direction:column; cursor:pointer;
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 20px 34px rgba(43,32,21,.18); border-color:var(--clay); }
+  .card-media{ aspect-ratio:1/1; position:relative; overflow:hidden; }
+  .card-media .coil-visual svg circle{ transition:transform .5s ease; transform-origin:center; }
+  .card:hover .card-media .coil-visual svg circle{ transform:scale(1.06); }
+  .card-badge{
+    position:absolute; top:10px; left:10px; background:rgba(255,251,242,.92); color:var(--ink);
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    padding:5px 9px; border-radius:20px; z-index:2;
+  }
+  .card-body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .card-cat{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); }
+  .card-name{ font-family:var(--font-display); font-size:18.5px; font-weight:600; line-height:1.2; }
+  .card-desc{ font-size:13px; color:var(--ink-soft); flex:1; margin:0; }
+  .card-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
+  .card-price{ font-family:var(--font-mono); font-size:15px; font-weight:500; }
+  .add-btn{
+    background:transparent; border:1.3px solid var(--ink); color:var(--ink);
+    padding:8px 13px; border-radius:var(--radius); font-size:12px; font-weight:700; cursor:pointer;
+    font-family:var(--font-mono); transition: all .18s ease; position:relative; z-index:2;
+  }
+  .add-btn.added{ background:var(--palm); border-color:var(--palm); color:var(--white); }
+  .add-btn:hover{ background:var(--ink); color:var(--white); }
+  .grid.stagger .card{ opacity:0; transform:translateY(20px); animation:cardIn .55s ease forwards; }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+
+  /* ===================== CATEGORY TILES ===================== */
+  .cat-tiles{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:760px){ .cat-tiles{ grid-template-columns:repeat(2,1fr); } }
+  .cat-tile{
+    position:relative; aspect-ratio:16/11; border-radius:var(--radius); overflow:hidden; cursor:pointer;
+    display:flex; align-items:flex-end; padding:20px; transition:transform .3s ease;
+  }
+  .cat-tile:hover{ transform:translateY(-4px); }
+  .cat-tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.55), transparent 60%); }
+  .cat-tile .coil-visual{ position:absolute; inset:0; }
+  .cat-tile span{ position:relative; z-index:2; color:var(--white); font-family:var(--font-display); font-size:20px; font-weight:600; }
+
+  /* ===================== CRAFT / PROCESS ===================== */
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+  .step{ border-top:2px solid var(--ink); padding-top:18px; }
+  .step .num{ font-family:var(--font-mono); font-size:13px; color:var(--clay); }
+  .step h3{ font-size:20px; margin:10px 0 8px; }
+  .step p{ font-size:14.5px; color:var(--ink-soft); }
+  @media (max-width:900px){ .steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .steps{ grid-template-columns:1fr; } }
+
+  /* ===================== SHOP CONTROLS ===================== */
+  .controls{ display:flex; gap:24px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:34px; }
+  .filters{ display:flex; gap:10px; flex-wrap:wrap; }
+  .filter-pill{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.02em;
+    border:1.3px solid var(--ink); background:transparent; color:var(--ink);
+    padding:9px 16px; border-radius:20px; cursor:pointer; transition:all .18s ease;
+  }
+  .filter-pill.active, .filter-pill:hover{ background:var(--ink); color:var(--white); }
+  .search-box{ display:flex; align-items:center; gap:8px; border:1.3px solid var(--ink); border-radius:20px; padding:9px 16px; min-width:220px; }
+  .search-box input{ border:none; background:transparent; outline:none; font-family:var(--font-body); font-size:14px; width:100%; color:var(--ink); }
+  .empty-state{ padding:60px 20px; text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:13.5px; }
+
+  /* ===================== PRODUCT DETAIL ===================== */
+  .pdp{ padding:48px 0 100px; }
+  .breadcrumb{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); margin-bottom:28px; display:flex; gap:8px; align-items:center; }
+  .breadcrumb a{ text-decoration:none; cursor:pointer; }
+  .breadcrumb a:hover{ color:var(--clay); }
+  .pdp-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+  @media (max-width:860px){ .pdp-grid{ grid-template-columns:1fr; gap:32px; } }
+
+  .pdp-gallery-main{ aspect-ratio:1/1; border-radius:var(--radius); overflow:hidden; margin-bottom:14px; }
+  .pdp-thumbs{ display:flex; gap:10px; }
+  .pdp-thumb{
+    width:72px; height:72px; border-radius:var(--radius); overflow:hidden; cursor:pointer;
+    border:2px solid transparent; opacity:.65; transition:opacity .2s ease, border-color .2s ease;
+  }
+  .pdp-thumb:hover{ opacity:1; }
+  .pdp-thumb.active{ opacity:1; border-color:var(--clay); }
+
+  .pdp-info .card-cat{ margin-bottom:10px; }
+  .pdp-info h1{ font-size:clamp(28px,3.4vw,38px); line-height:1.1; margin-bottom:14px; }
+  .pdp-price{ font-family:var(--font-mono); font-size:20px; margin-bottom:20px; }
+  .pdp-desc{ font-size:15.5px; color:var(--ink-soft); margin-bottom:28px; line-height:1.6; }
+
+  .pdp-specs{ border-top:1px solid var(--line); margin-bottom:28px; }
+  .spec-row{ display:flex; justify-content:space-between; gap:20px; padding:14px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .spec-row .k{ font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); flex-shrink:0; }
+  .spec-row .v{ text-align:right; max-width:60%; }
+
+  .pdp-qty-row{ display:flex; gap:14px; align-items:center; margin-bottom:16px; }
+  .qty-select{
+    display:flex; align-items:center; gap:14px; border:1.3px solid var(--ink); border-radius:var(--radius); padding:10px 16px;
+  }
+  .qty-select button{ background:none; border:none; font-size:16px; cursor:pointer; color:var(--ink); }
+  .qty-select span{ font-family:var(--font-mono); min-width:16px; text-align:center; }
+
+  .related-section{ margin-top:90px; }
+
+  /* ===================== ABOUT / FOOTER ===================== */
+  .about{ background:var(--ink); color:var(--sand); padding:90px 0; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start; }
+  .about h2{ color:var(--white); font-size:clamp(28px,3.4vw,40px); line-height:1.1; }
+  .about p{ color:#C9BCA4; font-size:15.5px; margin-top:18px; max-width:52ch; }
+  .contact-list{ list-style:none; padding:0; margin:26px 0 0; display:flex; flex-direction:column; gap:14px; }
+  .contact-list a{ text-decoration:none; display:flex; align-items:center; gap:10px; font-size:15px; color:var(--sand); }
+  .contact-list .k{ font-family:var(--font-mono); font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; width:70px; flex-shrink:0; }
+  @media (max-width:800px){ .about-grid{ grid-template-columns:1fr; } }
+  footer{ background:var(--ink); border-top:1px solid rgba(255,251,242,.14); padding:24px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; color:#9C8C71; font-size:12.5px; font-family:var(--font-mono); flex-wrap:wrap; gap:10px; }
+
+  /* ===================== BAG DRAWER ===================== */
+  .overlay{ position:fixed; inset:0; background:rgba(43,32,21,.45); opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:90; }
+  .overlay.open{ opacity:1; pointer-events:auto; }
+  .drawer{
+    position:fixed; top:0; right:0; height:100%; width:420px; max-width:92vw; background:var(--card); z-index:95;
+    box-shadow:-20px 0 40px rgba(0,0,0,.2); transform:translateX(100%); transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    display:flex; flex-direction:column;
+  }
+  .drawer.open{ transform:translateX(0); }
+  .drawer-head{ padding:22px 24px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+  .drawer-head h3{ font-size:20px; }
+  .drawer-close{ background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink); line-height:1; }
+  .drawer-list{ flex:1; overflow-y:auto; padding:10px 24px; }
+  .drawer-item{ display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); align-items:center; }
+  .drawer-item .swatch{ width:52px; height:52px; border-radius:var(--radius); flex-shrink:0; overflow:hidden; }
+  .drawer-item .info{ flex:1; min-width:0; }
+  .drawer-item .info .n{ font-weight:700; font-size:14px; }
+  .drawer-item .info .p{ font-family:var(--font-mono); font-size:12.5px; color:var(--ink-soft); }
+  .qty{ display:flex; align-items:center; gap:6px; }
+  .qty button{ width:22px; height:22px; border:1px solid var(--ink); background:transparent; border-radius:8px; cursor:pointer; font-size:13px; line-height:1;}
+  .qty span{ font-family:var(--font-mono); font-size:13px; width:16px; text-align:center; }
+  .remove-item{ background:none; border:none; color:var(--clay); font-family:var(--font-mono); font-size:11px; cursor:pointer; margin-left:6px; }
+  .drawer-empty{ padding:40px 0; text-align:center; color:var(--ink-soft); font-size:14px; }
+  .drawer-foot{ padding:20px 24px 26px; border-top:1px solid var(--line); }
+  .drawer-total{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:14px; margin-bottom:16px; }
+  .hint{ font-size:11.5px; color:var(--ink-soft); margin-top:10px; text-align:center; }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); z-index:120;
+    background:var(--ink); color:var(--white); padding:12px 20px; border-radius:var(--radius);
+    font-family:var(--font-mono); font-size:12.5px; opacity:0; transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .scroll-bg{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .particle{ position:absolute; will-change:transform; }
+  .particle-inner{ border-radius:50%; animation:particleFloat ease-in-out infinite; }
+  .particle-inner.hollow{ background:transparent !important; }
+  @keyframes particleFloat{
+    0%{ transform:translate(0,0) rotate(0deg); }
+    33%{ transform:translate(10px,-16px) rotate(8deg); }
+    66%{ transform:translate(-12px,10px) rotate(-6deg); }
+    100%{ transform:translate(0,0) rotate(0deg); }
+  }
+  header{ position:relative; z-index:20; }
+  .sale-banner, main, footer{ position:relative; z-index:1; }
+</style>
+</head>
+<body>
+<div class="scroll-bg" id="scrollBg" aria-hidden="true"></div>
+
+
+<header>
+  <div class="navrow">
+    <a class="logo" data-route="#/">Crafts of Pakistan<span class="dot">.</span></a>
+    <nav class="links" id="navLinks">
+      <a data-route="#/">Home</a>
+      <a data-route="#/shop">Shop</a>
+      <a data-anchor="craft">Our Craft</a>
+      <a data-route="#/contact">Contact</a>
+    </nav>
+    <div class="navactions">
+      <button class="cart-btn" id="cartOpenBtn">Bag <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="sale-banner" id="saleBanner" style="display:none;">
+  Eid Sale — 20% off storage baskets this week. <a data-route="#/shop?cat=basket">Shop the sale →</a>
+</div>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> Crafts of Pakistan — Handwoven Date Palm Leaf Craft</span>
+    <span>Every piece is one of one. Shipping across Pakistan.</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer" role="dialog" aria-label="Your bag">
+  <div class="drawer-head">
+    <h3>Your bag</h3>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-list" id="drawerList"></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Estimated total</span><span id="drawerTotal">PKR 0</span></div>
+    <button class="btn btn-primary btn-block" id="goCheckout">Go to checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================================
+   CONFIG
+   ========================================================================= */
+const STORE = { name: "Crafts of Pakistan", currency: "PKR", saleActive: false };
+const CONTACT = { whatsapp: "923215282064", email: "craftsofpakistanbyarshi@gmail.com" };
+document.getElementById("saleBanner").style.display = STORE.saleActive ? "block" : "none";
+
+const CATEGORIES = [
+  { id: "all",    label: "All" },
+  { id: "basket", label: "Baskets" },
+  { id: "mat",    label: "Mats" },
+  { id: "tray",   label: "Trays & Bowls" },
+  { id: "bag",    label: "Bags & Totes" },
+  { id: "decor",  label: "Home Decor" },
+  { id: "access", label: "Fans & Accessories" },
+];
+
+const CATEGORY_DETAILS = {
+  basket: { materials:"Date palm leaf (khajoor patti), hand-coiled and stitched with cotton thread.", care:"Wipe with a dry cloth. Keep away from prolonged direct moisture.", lead:"5–7 days" },
+  mat:    { materials:"Flat-braided date palm leaf strips.", care:"Shake out and air in shade. Spot-clean with a damp cloth.", lead:"4–6 days" },
+  tray:   { materials:"Tightly coiled date palm leaf over a stitched base.", care:"Wipe clean, avoid soaking. Not microwave safe.", lead:"3–5 days" },
+  bag:    { materials:"Date palm leaf body with reinforced woven straps.", care:"Store stuffed with paper to hold shape. Avoid rain.", lead:"6–8 days" },
+  decor:  { materials:"Date palm leaf, hand-shaped over a light frame where needed.", care:"Dust gently. Keep out of direct sun for long periods.", lead:"5–7 days" },
+  access: { materials:"Fine-split date palm leaf strips.", care:"Wipe with a dry cloth.", lead:"3–4 days" },
+};
+
+const CARD_TONES = {
+  basket: ["#7A5A32","#5A3F22"],
+  mat:    ["#8A6A3F","#5C4526"],
+  tray:   ["#6F5230","#493319"],
+  bag:    ["#3E5233","#2A3823"],
+  decor:  ["#A6512B","#7A3A1D"],
+  access: ["#B6842F","#805B1E"],
+};
+
+const PRODUCTS = [
+  { slug:"coiled-storage-basket", name:"Coiled Storage Basket", cat:"basket", price:2400, size:"32 × 32 × 28 cm", desc:"A deep, tightly coiled basket built for everyday storage — blankets, toys, or laundry waiting its turn. The double-strand handles are stitched through the rim for real load-bearing strength.", bestseller:true },
+  { slug:"round-laundry-basket", name:"Round Laundry Basket", cat:"basket", price:3200, size:"42 × 42 × 46 cm", desc:"Our largest coiled basket, with a reinforced rim that holds its shape even full. Built to live in a corner of the room for years.", bestseller:true },
+  { slug:"shallow-fruit-basket", name:"Shallow Fruit Basket", cat:"basket", price:1400, size:"28 × 28 × 9 cm", desc:"A wide, low-sided basket that keeps fruit or bread within easy reach on the table." },
+  { slug:"hanging-wall-basket", name:"Hanging Wall Basket", cat:"basket", price:1800, size:"20 × 12 × 24 cm", desc:"A flat-backed basket that mounts to the wall — mail, keys, or a small trailing plant." },
+  { slug:"lidded-gift-basket", name:"Lidded Gift Basket", cat:"basket", price:2900, size:"26 × 26 × 20 cm", desc:"Comes with a fitted woven lid, ready to fill and give as-is." },
+  { slug:"two-handle-picnic-basket", name:"Two-Handle Picnic Basket", cat:"basket", price:3600, size:"38 × 26 × 24 cm", desc:"Roomy enough for a real spread, with double handles for carrying it any distance." },
+  { slug:"mini-desk-basket", name:"Mini Desk Basket", cat:"basket", price:900, size:"14 × 14 × 10 cm", desc:"A small catch-all for a desk, bathroom shelf, or entryway table." },
+  { slug:"nesting-basket-set", name:"Nesting Basket Set (3)", cat:"basket", price:4200, size:"S 18cm · M 24cm · L 30cm", desc:"Three graduated baskets, coiled to nest neatly into each other for storage.", bestseller:true },
+  { slug:"round-table-placemat", name:"Round Table Placemat", cat:"mat", price:650, size:"34 cm diameter", desc:"A single flat-woven placemat in a tight coil pattern — sold individually." },
+  { slug:"placemat-set-of-4", name:"Placemat Set of 4", cat:"mat", price:2200, size:"34 cm diameter (×4)", desc:"Four matching round placemats, woven in the same sitting for a consistent set.", bestseller:true },
+  { slug:"oval-table-runner-mat", name:"Oval Table Runner Mat", cat:"mat", price:1600, size:"90 × 34 cm", desc:"A long oval mat that anchors the centre of the table for serving dishes." },
+  { slug:"floor-mat-large", name:"Floor Mat, Large", cat:"mat", price:3400, size:"120 × 80 cm", desc:"A sturdy floor mat in a thick double-leaf weave, built to take foot traffic." },
+  { slug:"doorstep-mat", name:"Doorstep Mat", cat:"mat", price:1900, size:"70 × 45 cm", desc:"A durable entryway mat with tightly bound edges that hold up to daily wear." },
+  { slug:"prayer-mat", name:"Prayer Mat", cat:"mat", price:2100, size:"110 × 70 cm, rolls to 12cm dia.", desc:"A compact, rollable mat finished with a bound border, light enough to carry." },
+  { slug:"hot-pad-trivet-pair", name:"Hot Pad Trivet Pair", cat:"mat", price:800, size:"18 cm diameter (×2)", desc:"Two thick woven trivets that protect surfaces from hot pots and pans." },
+  { slug:"round-serving-tray", name:"Round Serving Tray", cat:"tray", price:2100, size:"36 cm diameter", desc:"A flat woven tray with a raised rim and two side handles for carrying." },
+  { slug:"rectangular-serving-tray", name:"Rectangular Serving Tray", cat:"tray", price:2500, size:"46 × 30 cm", desc:"A long tray suited to serving tea, snacks, or bread at the table." },
+  { slug:"woven-fruit-bowl", name:"Woven Fruit Bowl", cat:"tray", price:1500, size:"26 cm dia × 12 cm h", desc:"A deep round bowl with a coiled base and gently tapered sides." },
+  { slug:"bread-basket-tray", name:"Bread Basket Tray", cat:"tray", price:1300, size:"30 × 22 × 8 cm", desc:"A shallow lined tray shaped specifically for bread and rolls." },
+  { slug:"coaster-set-of-6", name:"Coaster Set of 6", cat:"tray", price:900, size:"10 cm diameter (×6)", desc:"Six small round coasters, woven from the finest leaf strips we cut." },
+  { slug:"snack-bowl-small", name:"Snack Bowl, Small", cat:"tray", price:750, size:"14 cm dia × 7 cm h", desc:"A compact bowl for nuts, olives, or any small serving." },
+  { slug:"market-tote-bag", name:"Market Tote Bag", cat:"bag", price:2800, size:"38 × 34 × 14 cm", desc:"A sturdy shoulder tote with reinforced straps, built for a real grocery run.", bestseller:true },
+  { slug:"beach-tote-large", name:"Beach Tote, Large", cat:"bag", price:3100, size:"46 × 38 × 16 cm", desc:"An oversized tote with a wide flat base — roomy enough for a full day out." },
+  { slug:"structured-handbag", name:"Structured Handbag", cat:"bag", price:3800, size:"32 × 24 × 12 cm", desc:"A boxy handbag shape with a fabric-lined interior and a clasp closure." },
+  { slug:"clutch-bag", name:"Clutch Bag", cat:"bag", price:1900, size:"26 × 16 cm", desc:"A small flat clutch, finished with a leather-look closure." },
+  { slug:"drawstring-pouch", name:"Drawstring Pouch", cat:"bag", price:1100, size:"20 × 24 cm", desc:"A small drawstring bag for produce, trinkets, or light gifting." },
+  { slug:"woven-pendant-lampshade", name:"Woven Pendant Lampshade", cat:"decor", price:3500, size:"34 cm diameter", desc:"An open-weave shade that casts a dappled, warm light across a room." },
+  { slug:"wall-hanging-sunburst", name:"Wall Hanging, Sunburst", cat:"decor", price:2600, size:"50 cm diameter", desc:"A radial woven wall piece, sized to hold its own as a statement.", bestseller:true },
+  { slug:"plant-pot-holder", name:"Plant Pot Holder", cat:"decor", price:1200, size:"Fits 15–20cm pots", desc:"A woven sleeve that fits most medium plant pots without extra hardware." },
+  { slug:"wall-mirror-frame", name:"Wall Mirror Frame", cat:"decor", price:2900, size:"40 cm diameter", desc:"A round mirror bordered in a tight coiled leaf frame." },
+  { slug:"hand-fan", name:"Hand Fan", cat:"access", price:650, size:"24 × 18 cm", desc:"A flat woven hand fan with a bound wooden handle." },
+  { slug:"woven-sun-hat", name:"Woven Sun Hat", cat:"access", price:1700, size:"One size, 58cm brim", desc:"A wide-brimmed hat, finely woven for everyday shade." },
+  { slug:"keychain-charm-pair", name:"Keychain Charm Pair", cat:"access", price:400, size:"6 cm (×2)", desc:"Two small woven charms — a light everyday souvenir." },
+];
+
+/* =========================================================================
+   HELPERS
+   ========================================================================= */
+function fmtPrice(n){ return STORE.currency + " " + n.toLocaleString("en-PK"); }
+function catLabel(id){ return CATEGORIES.find(c => c.id === id)?.label || id; }
+
+let coilSeed = 0;
+function coilVisual(cat, opts = {}){
+  const [c1, c2] = CARD_TONES[cat] || ["#7A5A32","#5A3F22"];
+  const id = "coil" + (coilSeed++);
+  const ringCount = opts.rings || 5;
+  let circles = "";
+  for(let i = ringCount; i > 0; i--){
+    const r = (i / ringCount) * 46;
+    const opacity = 0.16 + (i % 2 === 0 ? 0.06 : 0);
+    circles += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="rgba(255,251,242,${opacity})" stroke-width="1.4"/>`;
+  }
+  const label = opts.label ? `<div class="core">${opts.label}</div>` : "";
+  return `<div class="coil-visual" style="background:linear-gradient(150deg, ${c1}, ${c2});">
+    <svg viewBox="0 0 100 100" id="${id}">${circles}</svg>
+    ${label}
+  </div>`;
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+/* =========================================================================
+   BAG STATE (in-memory — resets on reload; checkout stage will persist this)
+   ========================================================================= */
+let bag = [];
+function addToBag(slug, qty = 1){
+  const product = PRODUCTS.find(p => p.slug === slug);
+  if (!product) return;
+  const existing = bag.find(i => i.slug === slug);
+  if (existing) existing.qty += qty;
+  else bag.push({ ...product, qty });
+  updateCartCount();
+  renderDrawer();
+  showToast(`Added "${product.name}" to your bag`);
+}
+function updateCartCount(){
+  document.getElementById("cartCount").textContent = bag.reduce((s,i) => s + i.qty, 0);
+}
+function renderDrawer(){
+  const list = document.getElementById("drawerList");
+  list.innerHTML = "";
+  if (!bag.length){
+    list.innerHTML = `<div class="drawer-empty">Nothing here yet — add a few pieces from the shop.</div>`;
+  } else {
+    bag.forEach((item, idx) => {
+      const row = document.createElement("div");
+      row.className = "drawer-item";
+      row.innerHTML = `
+        <div class="swatch">${coilVisual(item.cat, { rings:3 })}</div>
+        <div class="info">
+          <div class="n">${item.name}</div>
+          <div class="p">${fmtPrice(item.price)} each</div>
+        </div>
+        <div class="qty">
+          <button data-action="dec" data-idx="${idx}" aria-label="Decrease quantity">−</button>
+          <span>${item.qty}</span>
+          <button data-action="inc" data-idx="${idx}" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="remove-item" data-action="remove" data-idx="${idx}">Remove</button>
+      `;
+      list.appendChild(row);
+    });
+  }
+  list.querySelectorAll("button[data-action]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.idx);
+      const action = btn.dataset.action;
+      if (action === "inc") bag[idx].qty += 1;
+      if (action === "dec") bag[idx].qty = Math.max(1, bag[idx].qty - 1);
+      if (action === "remove") bag.splice(idx, 1);
+      updateCartCount();
+      renderDrawer();
+    });
+  });
+  const total = bag.reduce((s,i) => s + i.price * i.qty, 0);
+  document.getElementById("drawerTotal").textContent = fmtPrice(total);
+}
+
+const drawer = document.getElementById("drawer");
+const overlay = document.getElementById("overlay");
+function openDrawer(){ drawer.classList.add("open"); overlay.classList.add("open"); renderDrawer(); }
+function closeDrawer(){ drawer.classList.remove("open"); overlay.classList.remove("open"); }
+document.getElementById("cartOpenBtn").addEventListener("click", openDrawer);
+document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+overlay.addEventListener("click", closeDrawer);
+document.getElementById("goCheckout").addEventListener("click", () => {
+  closeDrawer();
+  navigate("#/checkout");
+});
+
+/* =========================================================================
+   SCROLL REVEAL + MAGNETIC BUTTONS + TEXT EFFECTS (re-run after every render)
+   ========================================================================= */
+
+/* fx-float: words rise into place, staggered, when scrolled into view */
+function floatReveal(el){
+  if (el.dataset.floated) return;
+  el.dataset.floated = "1";
+  const byLetter = el.dataset.byLetter === "1";
+  const text = el.textContent;
+  const units = byLetter ? [...text] : text.split(" ");
+  el.textContent = "";
+  units.forEach((u, i) => {
+    const span = document.createElement("span");
+    span.textContent = u + (byLetter ? "" : (i < units.length - 1 ? "\u00A0" : ""));
+    span.style.display = "inline-block";
+    span.style.opacity = "0";
+    span.style.transform = "translateY(65%)";
+    span.style.transition = `opacity .55s ease ${i * 0.05}s, transform .55s cubic-bezier(.2,.8,.2,1) ${i * 0.05}s`;
+    el.appendChild(span);
+  });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.querySelectorAll("span").forEach(s => { s.style.opacity = "1"; s.style.transform = "translateY(0)"; });
+  }));
+}
+
+/* fx-rotate: cycles through a list of words, e.g. data-rotate='["a","b","c"]' */
+function initRotatingText(el){
+  if (el.dataset.rotating) return;
+  el.dataset.rotating = "1";
+  const words = JSON.parse(el.dataset.rotate);
+  let idx = 0;
+  const span = document.createElement("span");
+  span.className = "rotate-word";
+  span.textContent = words[0];
+  el.appendChild(span);
+  setInterval(() => {
+    span.style.opacity = "0";
+    span.style.transform = "translateY(-10px)";
+    setTimeout(() => {
+      idx = (idx + 1) % words.length;
+      span.textContent = words[idx];
+      span.style.transform = "translateY(10px)";
+      requestAnimationFrame(() => { span.style.opacity = "1"; span.style.transform = "translateY(0)"; });
+    }, 320);
+  }, 2200);
+}
+function initAllRotatingText(){
+  document.querySelectorAll("[data-rotate]").forEach(initRotatingText);
+}
+
+let revealObserver;
+function initReveal(){
+  if (revealObserver) revealObserver.disconnect();
+  revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting){
+        setTimeout(() => {
+          entry.target.classList.add("show");
+          if (entry.target.classList.contains("fx-float")) floatReveal(entry.target);
+        }, i * 40);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal, .fx-blur, .fx-float").forEach(el => revealObserver.observe(el));
+  initAllRotatingText();
+}
+
+/* =========================================================================
+   VIEWS
+   ========================================================================= */
+function productCard(p){
+  return `
+    <div class="card reveal show" data-slug="${p.slug}">
+      <div class="card-media">
+        ${p.bestseller ? `<span class="card-badge">Bestseller</span>` : ""}
+        ${coilVisual(p.cat)}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${catLabel(p.cat)}</div>
+        <div class="card-name">${p.name}</div>
+        <p class="card-desc">${p.desc}</p>
+        <div class="card-foot">
+          <span class="card-price">${fmtPrice(p.price)}</span>
+          <button class="add-btn" data-add="${p.slug}">Add to bag</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function bindCardEvents(root){
+  root.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("[data-add]")) return;
+      navigate(`#/product/${card.dataset.slug}`);
+    });
+  });
+  root.querySelectorAll("[data-add]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToBag(btn.dataset.add, 1);
+      btn.textContent = "Added ✓";
+      btn.classList.add("added");
+      setTimeout(() => { btn.textContent = "Add to bag"; btn.classList.remove("added"); }, 1200);
+    });
+  });
+}
+
+function renderHome(){
+  const bestsellers = PRODUCTS.filter(p => p.bestseller);
+  return `
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Handwoven · Date Palm Leaf · Pakistan</div>
+          <h1>
+            <span class="line"><span class="word" style="animation-delay:.05s">Every</span> <span class="word" style="animation-delay:.12s">strand</span></span>
+            <span class="line"><span class="word" style="animation-delay:.19s"><em>bent</em>,</span> <span class="word" style="animation-delay:.26s">braided,</span></span>
+            <span class="line"><span class="word" style="animation-delay:.33s">and</span> <span class="word" style="animation-delay:.4s">built</span> <span class="word" style="animation-delay:.47s">by</span> <span class="word" style="animation-delay:.54s">hand.</span></span>
+          </h1>
+          <p class="lede">Baskets, mats, and homeware coiled leaf by leaf from sun-dried date palm fronds, by a workshop working entirely in this one Pakistani material.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" data-route="#/shop">Shop bestsellers</a>
+            <a class="btn btn-ghost" data-anchor="categories">Browse by category</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee"><div class="marquee-track" id="marqTrack"></div></div>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Most reached for</div>
+            <h2 class="fx-shiny">Bestsellers</h2>
+          </div>
+          <a class="link-arrow" data-route="#/shop">See the full shop <span class="a">→</span></a>
+        </div>
+        <div class="grid stagger">${bestsellers.map(productCard).join("")}</div>
+      </div>
+    </section>
+
+    <section class="section" id="craft" style="padding-top:0;">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">From frond to form</div>
+            <h2 class="fx-blur reveal">One leaf, four hands, about a week.</h2>
+            <p>Every piece starts as a raw date palm frond and passes through the same unhurried sequence before it reaches you.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><div class="num">01</div><h3 class="fx-float reveal" data-by-letter="1">Harvest</h3><p>Mature fronds are cut by hand after the date harvest, when the leaf is strongest and most pliable.</p></div>
+          <div class="step reveal"><div class="num">02</div><h3 class="fx-float reveal" data-by-letter="1">Strip &amp; dry</h3><p>Leaflets are stripped, sorted by width, and sun-dried on rooftops until deep straw gold.</p></div>
+          <div class="step reveal"><div class="num">03</div><h3 class="fx-float reveal" data-by-letter="1">Soak &amp; braid</h3><p>Dried strands are re-soaked for flexibility, then braided into the base coils that give each piece its form.</p></div>
+          <div class="step reveal"><div class="num">04</div><h3 class="fx-float reveal" data-by-letter="1">Coil &amp; finish</h3><p>Coils are stitched into shape, edges bound, and each piece checked by hand before it's listed.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Shop by category</div>
+            <h2 class="fx-gradient">Find your piece</h2>
+          </div>
+        </div>
+        <div class="cat-tiles">
+          ${CATEGORIES.filter(c => c.id !== "all").map(c => `
+            <div class="cat-tile reveal" data-route="#/shop?cat=${c.id}">
+              ${coilVisual(c.id, { rings:6 })}
+              <span class="fx-float reveal" data-by-letter="1">${c.label}</span>
+            </div>`).join("")}
+        </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="eyebrow" style="color:var(--gold)">About the workshop</div>
+          <h2 class="fx-gradient">Made in small batches, shipped across Pakistan.</h2>
+          <p>Crafts of Pakistan is a one-workshop studio working entirely in date palm leaf — plentiful, biodegradable, and traditionally left to waste after harvest. Every order is made and packed to match what you actually need.</p>
+        </div>
+        <div class="reveal">
+          <a class="btn btn-primary" data-route="#/contact">Get in touch</a>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderContact(){
+  return `
+    <section class="section" style="padding-top:44px; padding-bottom:110px;">
+      <div class="wrap about-grid" style="align-items:start;">
+        <div class="reveal show">
+          <div class="eyebrow">Get in touch</div>
+          <h2 class="fx-blur reveal" style="font-size:clamp(28px,3.4vw,40px); margin-bottom:16px;">We'd love to hear from you.</h2>
+          <p style="color:var(--ink-soft); font-size:15.5px; margin-bottom:28px; max-width:44ch;">Questions about a piece, a custom order, or your delivery — reach out directly or send a message below.</p>
+          <ul class="contact-list">
+            <li><span class="k" style="color:var(--clay);">WhatsApp</span> <a href="https://wa.me/${CONTACT.whatsapp}" target="_blank" rel="noopener" style="color:var(--ink); font-weight:600; text-decoration:underline;">+${CONTACT.whatsapp}</a></li>
+            <li><span class="k" style="color:var(--clay);">Email</span> <a href="mailto:${CONTACT.email}" style="color:var(--ink); font-weight:600; text-decoration:underline;">${CONTACT.email}</a></li>
+            <li><span class="k" style="color:var(--clay);">Studio</span> <span style="color:var(--ink);">Made to order — ships in 3–8 days depending on piece</span></li>
+          </ul>
+        </div>
+        <div class="reveal show">
+          <form action="https://formsubmit.co/${CONTACT.email}" method="POST" style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:16px;">
+            <input type="hidden" name="_subject" value="New message — Crafts of Pakistan website">
+            <input type="hidden" name="_captcha" value="false">
+            <div>
+              <label style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);">Name</label>
+              <input required name="name" type="text" style="width:100%; margin-top:6px; padding:12px 14px; border:1.3px solid var(--ink); border-radius:10px; font-family:var(--font-body); font-size:16px; background:var(--white);">
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);">Email</label>
+              <input required name="email" type="email" style="width:100%; margin-top:6px; padding:12px 14px; border:1.3px solid var(--ink); border-radius:10px; font-family:var(--font-body); font-size:16px; background:var(--white);">
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);">Message</label>
+              <textarea required name="message" rows="4" style="width:100%; margin-top:6px; padding:12px 14px; border:1.3px solid var(--ink); border-radius:10px; font-family:var(--font-body); font-size:16px; background:var(--white); resize:vertical;"></textarea>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Send message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderCheckout(){
+  const fieldStyle = "width:100%; margin-top:6px; padding:12px 14px; border:1.3px solid var(--ink); border-radius:10px; font-family:var(--font-body); font-size:16px; background:var(--white);";
+  const labelStyle = "font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);";
+
+  /* PAYMENT_DETAILS — dummy placeholders, edit to your real account info */
+  const PAYMENT_DETAILS = {
+    bankName: "Meezan Bank",
+    accountTitle: "Arshi — Crafts of Pakistan",
+    accountNumber: "01234567890123",
+    iban: "PK00 MEZN 0001 2345 6789 01",
+    easypaisaTitle: "Arshi",
+    easypaisaNumber: "0321-5282064",
+  };
+
+  if (!bag.length){
+    return `
+      <section class="section" style="padding-top:60px; text-align:center;">
+        <div class="wrap">
+          <h2 style="margin-bottom:14px;">Your bag is empty</h2>
+          <p style="color:var(--ink-soft); margin-bottom:26px;">Add a few pieces from the shop before checking out.</p>
+          <a class="btn btn-primary" data-route="#/shop">Browse the shop</a>
+        </div>
+      </section>`;
+  }
+
+  setTimeout(() => {
+    const summaryEl = document.getElementById("checkoutSummary");
+    const totalEl = document.getElementById("checkoutTotal");
+
+    function drawSummary(){
+      summaryEl.innerHTML = bag.map((item, idx) => `
+        <div class="drawer-item">
+          <div class="swatch">${coilVisual(item.cat, { rings:3 })}</div>
+          <div class="info">
+            <div class="n">${item.name}</div>
+            <div class="p">${fmtPrice(item.price)} each</div>
+          </div>
+          <div class="qty">
+            <button data-action="dec" data-idx="${idx}" aria-label="Decrease quantity">−</button>
+            <span>${item.qty}</span>
+            <button data-action="inc" data-idx="${idx}" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="remove-item" data-action="remove" data-idx="${idx}">Remove</button>
+        </div>`).join("");
+      const total = bag.reduce((s,i) => s + i.price * i.qty, 0);
+      totalEl.textContent = fmtPrice(total);
+      updateCartCount();
+
+      summaryEl.querySelectorAll("button[data-action]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.idx);
+          const action = btn.dataset.action;
+          if (action === "inc") bag[idx].qty += 1;
+          if (action === "dec") bag[idx].qty = Math.max(1, bag[idx].qty - 1);
+          if (action === "remove") bag.splice(idx, 1);
+          if (!bag.length){ navigate("#/checkout"); return; }
+          drawSummary();
+        });
+      });
+    }
+    drawSummary();
+
+    function buildOrderText(name, phone, address){
+      const total = bag.reduce((s,i) => s + i.price * i.qty, 0);
+      let lines = [`New order — Crafts of Pakistan`, ``, `Name: ${name}`, `Phone: ${phone}`, `Address: ${address}`, ``, `Items:`];
+      bag.forEach(i => lines.push(`- ${i.name} × ${i.qty} (${fmtPrice(i.price * i.qty)})`));
+      lines.push(``, `Total: ${fmtPrice(total)}`, ``, `Payment receipt emailed separately.`);
+      return lines.join("\n");
+    }
+
+    const form = document.getElementById("checkoutForm");
+    const fileInput = document.getElementById("receiptInput");
+    const fileNameLabel = document.getElementById("receiptFileName");
+
+    fileInput.addEventListener("change", () => {
+      fileNameLabel.textContent = fileInput.files[0] ? fileInput.files[0].name : "No file chosen";
+    });
+
+    form.addEventListener("submit", (e) => {
+      if (!form.reportValidity()){ e.preventDefault(); return; }
+
+      const name = form.querySelector("[name='Name']").value.trim();
+      const phone = form.querySelector("[name='Phone']").value.trim();
+      const address = form.querySelector("[name='Address']").value.trim();
+      const msg = buildOrderText(name, phone, address);
+      document.getElementById("orderDetailsField").value = msg;
+
+      // Open WhatsApp immediately (synchronously, in direct response to the
+      // click) so browsers don't block it as a popup — this can't wait on
+      // the form's own submission below.
+      window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+
+      bag = [];
+      updateCartCount();
+      // Not preventing default here — the form submits for real (with the
+      // file attached) to FormSubmit, which then redirects the browser
+      // straight to our own #/order-confirmed page via _next, so no
+      // FormSubmit-branded page is ever shown.
+    });
+  }, 0);
+
+  return `
+    <section class="section" id="checkoutRoot" style="padding-top:44px; padding-bottom:110px;">
+      <div class="wrap">
+        <div class="eyebrow reveal show">Checkout</div>
+        <h2 class="fx-shiny" style="font-size:clamp(28px,3.4vw,40px); margin-bottom:36px;">Almost there.</h2>
+        <div class="about-grid" style="align-items:start;">
+          <div class="reveal show">
+            <h3 style="font-size:17px; margin-bottom:16px;">Your order</h3>
+            <div id="checkoutSummary" style="border-top:1px solid var(--line);"></div>
+            <div class="drawer-total" style="margin-top:16px;"><span>Total</span><span id="checkoutTotal">PKR 0</span></div>
+
+            <h3 style="font-size:17px; margin:34px 0 16px;">Pay by bank transfer or Easypaisa</h3>
+            <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; display:flex; flex-direction:column; gap:14px;">
+              <div>
+                <div style="${labelStyle}">Bank transfer</div>
+                <div style="font-size:14px; margin-top:6px; line-height:1.6;">
+                  ${PAYMENT_DETAILS.bankName}<br>
+                  Account title: ${PAYMENT_DETAILS.accountTitle}<br>
+                  Account #: ${PAYMENT_DETAILS.accountNumber}<br>
+                  IBAN: ${PAYMENT_DETAILS.iban}
+                </div>
+              </div>
+              <div style="border-top:1px solid var(--line); padding-top:14px;">
+                <div style="${labelStyle}">Easypaisa</div>
+                <div style="font-size:14px; margin-top:6px; line-height:1.6;">
+                  Account title: ${PAYMENT_DETAILS.easypaisaTitle}<br>
+                  Number: ${PAYMENT_DETAILS.easypaisaNumber}
+                </div>
+              </div>
+            </div>
+            <p class="hint" style="text-align:left; margin-top:10px;">These are placeholder details — swap in your real account info in PAYMENT_DETAILS in the code.</p>
+          </div>
+
+          <div class="reveal show">
+            <form id="checkoutForm" action="https://formsubmit.co/${CONTACT.email}" method="POST" enctype="multipart/form-data" style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:16px;">
+              <input type="hidden" name="_subject" value="New order + receipt — Crafts of Pakistan">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_next" value="${window.location.origin}${window.location.pathname}#/order-confirmed">
+              <input type="hidden" id="orderDetailsField" name="Order details" value="">
+              <div>
+                <label style="${labelStyle}">Name</label>
+                <input required name="Name" type="text" style="${fieldStyle}">
+              </div>
+              <div>
+                <label style="${labelStyle}">Phone</label>
+                <input required name="Phone" type="tel" style="${fieldStyle}">
+              </div>
+              <div>
+                <label style="${labelStyle}">Email</label>
+                <input required name="Email" type="email" style="${fieldStyle}">
+              </div>
+              <div>
+                <label style="${labelStyle}">Delivery address</label>
+                <textarea required name="Address" rows="3" style="${fieldStyle} resize:vertical;"></textarea>
+              </div>
+              <div>
+                <label style="${labelStyle}">Payment receipt screenshot</label>
+                <p style="font-size:12.5px; color:var(--ink-soft); margin:4px 0 8px;">Pay using the details on the left, then upload proof here.</p>
+                <label for="receiptInput" style="display:flex; align-items:center; justify-content:space-between; gap:10px; border:1.3px dashed var(--ink); border-radius:10px; padding:12px 14px; cursor:pointer; font-size:13.5px;">
+                  <span id="receiptFileName" style="color:var(--ink-soft);">No file chosen</span>
+                  <span class="add-btn" style="pointer-events:none;">Choose file</span>
+                </label>
+                <input required id="receiptInput" name="Receipt" type="file" accept="image/*" style="display:none;">
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Place order via WhatsApp</button>
+              <p class="hint">This opens WhatsApp with your order pre-filled and emails your receipt to the workshop — both in one tap.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+
+function renderOrderConfirmed(){
+  return `
+    <section class="section" style="padding-top:60px; text-align:center; padding-bottom:110px;">
+      <div class="wrap">
+        <h2 style="margin-bottom:14px;">Order placed — check WhatsApp</h2>
+        <p style="color:var(--ink-soft); max-width:44ch; margin:0 auto 30px;">Your order and receipt have been emailed to the workshop. WhatsApp should have opened in another tab with your order pre-filled — just hit send there too.</p>
+        <a class="btn btn-primary" data-route="#/shop">Continue shopping</a>
+      </div>
+    </section>
+  `;
+}
+
+
+function renderShop(params){
+  const initialCat = params.get("cat") || "all";
+  setTimeout(() => {
+    let activeCat = initialCat;
+    let searchTerm = "";
+    const filterRow = document.getElementById("filterRow");
+    const grid = document.getElementById("shopGrid");
+    const empty = document.getElementById("shopEmpty");
+
+    CATEGORIES.forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "filter-pill" + (c.id === activeCat ? " active" : "");
+      btn.textContent = c.label;
+      btn.addEventListener("click", () => {
+        activeCat = c.id;
+        filterRow.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        draw();
+      });
+      filterRow.appendChild(btn);
+    });
+
+    document.getElementById("shopSearch").addEventListener("input", (e) => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      draw();
+    });
+
+    function draw(){
+      const filtered = PRODUCTS.filter(p => {
+        const matchCat = activeCat === "all" || p.cat === activeCat;
+        const matchSearch = !searchTerm || p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
+        return matchCat && matchSearch;
+      });
+      empty.style.display = filtered.length ? "none" : "block";
+      grid.className = "grid stagger";
+      grid.innerHTML = filtered.map(productCard).join("");
+      bindCardEvents(grid);
+    }
+    draw();
+  }, 0);
+
+  return `
+    <section class="section" style="padding-top:44px;">
+      <div class="wrap">
+        <div class="section-head reveal show">
+          <div><div class="eyebrow">The catalogue</div><h2>32 pieces, <span data-rotate='["made to order.","hand-coiled.","one of one.","shipped across Pakistan."]'></span></h2></div>
+        </div>
+        <div class="controls reveal show">
+          <div class="filters" id="filterRow"></div>
+          <div class="search-box"><span aria-hidden="true">⌕</span><input type="text" id="shopSearch" placeholder="Search baskets, mats, trays…"></div>
+        </div>
+        <div class="grid" id="shopGrid"></div>
+        <div class="empty-state" id="shopEmpty" style="display:none;">No pieces match that search — try another word or category.</div>
+      </div>
+    </section>
+  `;
+}
+
+function renderProduct(slug){
+  const p = PRODUCTS.find(p => p.slug === slug);
+  if (!p){
+    return `<section class="section wrap"><p>That piece couldn't be found. <a class="link-arrow" data-route="#/shop">Back to shop <span class="a">→</span></a></p></section>`;
+  }
+  const details = CATEGORY_DETAILS[p.cat];
+  const related = PRODUCTS.filter(r => r.cat === p.cat && r.slug !== p.slug).slice(0, 4);
+  const gallery = [
+    { rings:5, label:p.name },
+    { rings:8 },
+    { rings:3 },
+  ];
+
+  setTimeout(() => {
+    const thumbs = document.querySelectorAll(".pdp-thumb");
+    const main = document.getElementById("pdpMain");
+    thumbs.forEach(t => t.addEventListener("click", () => {
+      thumbs.forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      main.innerHTML = t.innerHTML;
+    }));
+
+    let qty = 1;
+    const qtyLabel = document.getElementById("qtyLabel");
+    document.getElementById("qtyInc").addEventListener("click", () => { qty++; qtyLabel.textContent = qty; });
+    document.getElementById("qtyDec").addEventListener("click", () => { qty = Math.max(1, qty - 1); qtyLabel.textContent = qty; });
+    document.getElementById("pdpAdd").addEventListener("click", () => addToBag(p.slug, qty));
+
+    bindCardEvents(document.getElementById("relatedGrid"));
+  }, 0);
+
+  return `
+    <section class="pdp">
+      <div class="wrap">
+        <div class="breadcrumb reveal show">
+          <a data-route="#/shop">Shop</a> / <a data-route="#/shop?cat=${p.cat}">${catLabel(p.cat)}</a> / <span>${p.name}</span>
+        </div>
+        <div class="pdp-grid">
+          <div class="reveal show">
+            <div class="pdp-gallery-main" id="pdpMain">${coilVisual(p.cat, gallery[0])}</div>
+            <div class="pdp-thumbs">
+              ${gallery.map((g, i) => `<div class="pdp-thumb ${i===0?'active':''}">${coilVisual(p.cat, g)}</div>`).join("")}
+            </div>
+          </div>
+          <div class="pdp-info reveal show">
+            <div class="card-cat">${catLabel(p.cat)}</div>
+            <h1>${p.name}</h1>
+            <div class="pdp-price">${fmtPrice(p.price)}</div>
+            <p class="pdp-desc">${p.desc}</p>
+
+            <div class="pdp-specs">
+              <div class="spec-row"><span class="k">Size</span><span class="v">${p.size}</span></div>
+              <div class="spec-row"><span class="k">Materials</span><span class="v">${details.materials}</span></div>
+              <div class="spec-row"><span class="k">Care</span><span class="v">${details.care}</span></div>
+              <div class="spec-row"><span class="k">Made to order</span><span class="v">Ships in ${details.lead}</span></div>
+            </div>
+
+            <div class="pdp-qty-row">
+              <div class="qty-select">
+                <button id="qtyDec" aria-label="Decrease quantity">−</button>
+                <span id="qtyLabel">1</span>
+                <button id="qtyInc" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block" id="pdpAdd">Add to bag</button>
+          </div>
+        </div>
+
+        ${related.length ? `
+        <div class="related-section">
+          <div class="section-head reveal">
+            <div><div class="eyebrow">You might also like</div><h2>More from ${catLabel(p.cat)}</h2></div>
+          </div>
+          <div class="grid stagger" id="relatedGrid">${related.map(productCard).join("")}</div>
+        </div>` : ""}
+      </div>
+    </section>
+  `;
+}
+
+/* =========================================================================
+   ROUTER
+   ========================================================================= */
+const app = document.getElementById("app");
+
+function navigate(hash){ window.location.hash = hash; }
+
+function parseHash(){
+  const raw = window.location.hash || "#/";
+  const [pathPart, queryPart] = raw.slice(1).split("?");
+  const segments = pathPart.split("/").filter(Boolean);
+  const params = new URLSearchParams(queryPart || "");
+  return { segments, params };
+}
+
+function render(){
+  const { segments, params } = parseHash();
+  let html = "";
+
+  if (segments.length === 0){
+    html = renderHome();
+  } else if (segments[0] === "shop"){
+    html = renderShop(params);
+  } else if (segments[0] === "contact"){
+    html = renderContact();
+  } else if (segments[0] === "checkout"){
+    html = renderCheckout();
+  } else if (segments[0] === "order-confirmed"){
+    html = renderOrderConfirmed();
+  } else if (segments[0] === "product" && segments[1]){
+    html = renderProduct(segments[1]);
+  } else {
+    html = renderHome();
+  }
+
+  app.innerHTML = html;
+  bindCardEvents(app);
+
+  if (pendingAnchor){
+    const target = pendingAnchor;
+    pendingAnchor = null;
+    requestAnimationFrame(() => {
+      const el = document.getElementById(target);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  } else {
+    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  }
+
+  // nav active state
+  document.querySelectorAll("nav.links a[data-route]").forEach(a => {
+    a.classList.toggle("active", a.dataset.route === "#/" + segments.join("/"));
+  });
+
+  requestAnimationFrame(() => { initReveal(); initStarBorder(); });
+}
+
+let pendingAnchor = null;
+function scrollToAnchor(id){
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* star border — wraps each button's content in .btn-inner and adds two
+   comet-trail gradients that sweep behind it, peeking out as a glowing edge */
+function initStarBorder(){
+  document.querySelectorAll(".btn").forEach(btn => {
+    if (btn.dataset.starInit) return;
+    btn.dataset.starInit = "1";
+    const inner = document.createElement("span");
+    inner.className = "btn-inner";
+    while (btn.firstChild) inner.appendChild(btn.firstChild);
+    const top = document.createElement("div");
+    top.className = "border-gradient-top";
+    const bottom = document.createElement("div");
+    bottom.className = "border-gradient-bottom";
+    btn.appendChild(top);
+    btn.appendChild(bottom);
+    btn.appendChild(inner);
+  });
+}
+
+document.addEventListener("click", (e) => {
+  const routeEl = e.target.closest("[data-route]");
+  if (routeEl){
+    e.preventDefault();
+    navigate(routeEl.dataset.route);
+    return;
+  }
+  const anchorEl = e.target.closest("[data-anchor]");
+  if (anchorEl){
+    e.preventDefault();
+    const isHome = !window.location.hash || window.location.hash === "#/" || window.location.hash === "#";
+    if (isHome){
+      scrollToAnchor(anchorEl.dataset.anchor);
+    } else {
+      pendingAnchor = anchorEl.dataset.anchor;
+      navigate("#/");
+    }
+  }
+});
+
+window.addEventListener("hashchange", render);
+
+/* contact links are set directly in the renderHome() template via CONTACT */
+
+/* marquee content */
+const marqItems = ["Hand-cut fronds","Sun-dried","Hand-braided","Zero plastic","Made to order","Ships across Pakistan"];
+const marqTrackEl = () => document.getElementById("marqTrack");
+function fillMarquee(){
+  const el = marqTrackEl();
+  if (!el) return;
+  el.innerHTML = "";
+  [...marqItems, ...marqItems].forEach(t => {
+    const span = document.createElement("span");
+    span.textContent = t;
+    el.appendChild(span);
+  });
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* initial render */
+render();
+fillMarquee();
+const homeObserverPatch = new MutationObserver(fillMarquee);
+homeObserverPatch.observe(app, { childList: true });
+
+/* floating particle background — small, numerous, always drifting */
+const PARTICLE_COLORS = ["#A6512B", "#3E5233", "#B6842F"];
+function initParticles(){
+  const container = document.getElementById("scrollBg");
+  const pageSpan = Math.max(400, Math.ceil(document.body.scrollHeight / window.innerHeight * 100));
+  const count = 26;
+  for (let i = 0; i < count; i++){
+    const outer = document.createElement("div");
+    outer.className = "particle";
+    outer.dataset.speed = (0.03 + Math.random() * 0.14).toFixed(3);
+    outer.style.left = (Math.random() * 100) + "%";
+    outer.style.top = (Math.random() * pageSpan) + "vh";
+
+    const size = 5 + Math.random() * 9; // 5–14px, kept small
+    const hollow = Math.random() < 0.4;
+    const color = PARTICLE_COLORS[i % PARTICLE_COLORS.length];
+
+    const inner = document.createElement("div");
+    inner.className = "particle-inner" + (hollow ? " hollow" : "");
+    inner.style.width = size + "px";
+    inner.style.height = size + "px";
+    inner.style.opacity = (hollow ? 0.5 : 0.32).toString();
+    inner.style.background = hollow ? "transparent" : color;
+    if (hollow) inner.style.border = `1.5px solid ${color}`;
+    inner.style.animationDuration = (6 + Math.random() * 7).toFixed(2) + "s";
+    inner.style.animationDelay = (Math.random() * 6).toFixed(2) + "s";
+
+    outer.appendChild(inner);
+    container.appendChild(outer);
+  }
+}
+initParticles();
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!reduceMotion){
+  const particles = document.querySelectorAll(".scroll-bg .particle");
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      particles.forEach(p => {
+        const speed = parseFloat(p.dataset.speed);
+        p.style.transform = `translateY(${-y * speed}px)`;
+      });
+      ticking = false;
+    });
+  }, { passive: true });
+}
+</script>
+</body>
+</html>
