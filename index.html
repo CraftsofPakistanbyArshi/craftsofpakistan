@@ -467,7 +467,22 @@ const PRODUCTS = [
   { slug:"lidded-gift-basket", name:"Lidded Gift Basket", cat:"basket", price:2900, size:"26 × 26 × 20 cm", desc:"Comes with a fitted woven lid, ready to fill and give as-is." },
   { slug:"two-handle-picnic-basket", name:"Two-Handle Picnic Basket", cat:"basket", price:3600, size:"38 × 26 × 24 cm", desc:"Roomy enough for a real spread, with double handles for carrying it any distance." },
   { slug:"mini-desk-basket", name:"Mini Desk Basket", cat:"basket", price:900, size:"14 × 14 × 10 cm", desc:"A small catch-all for a desk, bathroom shelf, or entryway table." },
-  { slug:"nesting-basket-set", name:"Nesting Basket Set (3)", cat:"basket", price:4200, size:"S 18cm · M 24cm · L 30cm", desc:"Three graduated baskets, coiled to nest neatly into each other for storage.", bestseller:true },
+  { slug:"crochet-baskets", name:"Crochet Baskets", cat:"basket", size:"See size options", desc:"Hand-crocheted date palm leaf baskets with a scalloped shell-stitch rim in a contrast tone. Sold individually in three sizes, or as a nesting set of all three.", bestseller:true,
+    variants:{
+      colors:[
+        { id:"charcoal", label:"Natural / Charcoal", swatch:"#2b2420", images:["images/crochet-basket-01.jpg","images/crochet-basket-04.jpg","images/crochet-basket-06.jpg"] },
+        { id:"navy",     label:"Natural / Navy",      swatch:"#28304f", images:["images/crochet-basket-navy-03.jpg","images/crochet-basket-navy-01.jpg","images/crochet-basket-navy-02.jpg"] },
+        { id:"pink",     label:"Natural / Pink",      swatch:"#c22e83", images:["images/crochet-basket-pink-01.jpg","images/crochet-basket-pink-02.jpg","images/crochet-basket-pink-03.jpg"] },
+        { id:"green",    label:"Natural / Green",     swatch:"#0e6b52", images:["images/crochet-basket-green-01.jpg","images/crochet-basket-green-02.jpg","images/crochet-basket-green-03.jpg"] },
+      ],
+      sizes:[
+        { id:"large",  label:"Large — 10 in",  price:2200 },
+        { id:"medium", label:"Medium — 9 in",  price:2000 },
+        { id:"small",  label:"Small — 8 in",   price:1800 },
+        { id:"set",    label:"Set of 3",       price:6000 },
+      ]
+    }
+  },
   { slug:"round-table-placemat", name:"Round Table Placemat", cat:"mat", price:650, size:"34 cm diameter", desc:"A single flat-woven placemat in a tight coil pattern — sold individually." },
   { slug:"placemat-set-of-4", name:"Placemat Set of 4", cat:"mat", price:2200, size:"34 cm diameter (×4)", desc:"Four matching round placemats, woven in the same sitting for a consistent set.", bestseller:true },
   { slug:"oval-table-runner-mat", name:"Oval Table Runner Mat", cat:"mat", price:1600, size:"90 × 34 cm", desc:"A long oval mat that anchors the centre of the table for serving dishes." },
@@ -500,6 +515,15 @@ const PRODUCTS = [
    ========================================================================= */
 function fmtPrice(n){ return STORE.currency + " " + n.toLocaleString("en-PK"); }
 function catLabel(id){ return CATEGORIES.find(c => c.id === id)?.label || id; }
+function basePrice(p){
+  if (p.variants) return Math.min(...p.variants.sizes.map(s => s.price));
+  return p.price;
+}
+function cardMedia(p){
+  const img = (p.images && p.images[0]) || (p.variants && p.variants.colors[0].images && p.variants.colors[0].images[0]);
+  if (img) return `<img src="${img}" alt="${p.name}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">`;
+  return coilVisual(p.cat);
+}
 
 let coilSeed = 0;
 function coilVisual(cat, opts = {}){
@@ -531,18 +555,20 @@ function showToast(msg){
    BAG STATE (in-memory — resets on reload; checkout stage will persist this)
    ========================================================================= */
 let bag = [];
-function addToBag(slug, qty = 1){
-  const product = PRODUCTS.find(p => p.slug === slug);
-  if (!product) return;
-  const existing = bag.find(i => i.slug === slug);
+function addToBag(item, qty = 1){
+  const existing = bag.find(i => i.key === item.key);
   if (existing) existing.qty += qty;
-  else bag.push({ ...product, qty });
+  else bag.push({ ...item, qty });
   updateCartCount();
   renderDrawer();
-  showToast(`Added "${product.name}" to your bag`);
+  showToast(`Added "${item.name}" to your bag`);
 }
 function updateCartCount(){
   document.getElementById("cartCount").textContent = bag.reduce((s,i) => s + i.qty, 0);
+}
+function bagThumb(item){
+  if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">`;
+  return coilVisual(item.cat, { rings:3 });
 }
 function renderDrawer(){
   const list = document.getElementById("drawerList");
@@ -554,7 +580,7 @@ function renderDrawer(){
       const row = document.createElement("div");
       row.className = "drawer-item";
       row.innerHTML = `
-        <div class="swatch">${coilVisual(item.cat, { rings:3 })}</div>
+        <div class="swatch">${bagThumb(item)}</div>
         <div class="info">
           <div class="n">${item.name}</div>
           <div class="p">${fmtPrice(item.price)} each</div>
@@ -669,19 +695,23 @@ function initReveal(){
    VIEWS
    ========================================================================= */
 function productCard(p){
+  const hasVariants = !!p.variants;
+  const priceLabel = hasVariants ? `From ${fmtPrice(basePrice(p))}` : fmtPrice(p.price);
+  const btnLabel = hasVariants ? "View options" : "Add to bag";
+  const btnAttr = hasVariants ? `data-view="${p.slug}"` : `data-add="${p.slug}"`;
   return `
     <div class="card reveal show" data-slug="${p.slug}">
       <div class="card-media">
         ${p.bestseller ? `<span class="card-badge">Bestseller</span>` : ""}
-        ${coilVisual(p.cat)}
+        ${cardMedia(p)}
       </div>
       <div class="card-body">
         <div class="card-cat">${catLabel(p.cat)}</div>
         <div class="card-name">${p.name}</div>
         <p class="card-desc">${p.desc}</p>
         <div class="card-foot">
-          <span class="card-price">${fmtPrice(p.price)}</span>
-          <button class="add-btn" data-add="${p.slug}">Add to bag</button>
+          <span class="card-price">${priceLabel}</span>
+          <button class="add-btn" ${btnAttr}>${btnLabel}</button>
         </div>
       </div>
     </div>`;
@@ -690,14 +720,22 @@ function productCard(p){
 function bindCardEvents(root){
   root.querySelectorAll(".card").forEach(card => {
     card.addEventListener("click", (e) => {
-      if (e.target.closest("[data-add]")) return;
+      if (e.target.closest("[data-add]") || e.target.closest("[data-view]")) return;
       navigate(`#/product/${card.dataset.slug}`);
+    });
+  });
+  root.querySelectorAll("[data-view]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navigate(`#/product/${btn.dataset.view}`);
     });
   });
   root.querySelectorAll("[data-add]").forEach(btn => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      addToBag(btn.dataset.add, 1);
+      const product = PRODUCTS.find(pr => pr.slug === btn.dataset.add);
+      if (!product) return;
+      addToBag({ slug: product.slug, key: product.slug, name: product.name, price: product.price, cat: product.cat, image: product.images?.[0] }, 1);
       btn.textContent = "Added ✓";
       btn.classList.add("added");
       setTimeout(() => { btn.textContent = "Add to bag"; btn.classList.remove("added"); }, 1200);
@@ -862,7 +900,7 @@ function renderCheckout(){
     function drawSummary(){
       summaryEl.innerHTML = bag.map((item, idx) => `
         <div class="drawer-item">
-          <div class="swatch">${coilVisual(item.cat, { rings:3 })}</div>
+          <div class="swatch">${bagThumb(item)}</div>
           <div class="info">
             <div class="n">${item.name}</div>
             <div class="p">${fmtPrice(item.price)} each</div>
@@ -1084,29 +1122,116 @@ function renderProduct(slug){
   }
   const details = CATEGORY_DETAILS[p.cat];
   const related = PRODUCTS.filter(r => r.cat === p.cat && r.slug !== p.slug).slice(0, 4);
-  const gallery = [
-    { rings:5, label:p.name },
-    { rings:8 },
-    { rings:3 },
-  ];
+  const hasVariants = !!p.variants;
+
+  function imagesFor(colorId){
+    if (hasVariants){
+      const c = p.variants.colors.find(c => c.id === colorId) || p.variants.colors[0];
+      return c.images && c.images.length ? c.images : null;
+    }
+    return (p.images && p.images.length) ? p.images : null;
+  }
+  function galleryHTMLFor(colorId){
+    const imgs = imagesFor(colorId);
+    return imgs
+      ? imgs.map(src => `<img src="${src}" alt="${p.name}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">`)
+      : [coilVisual(p.cat, { rings:5, label:p.name }), coilVisual(p.cat, { rings:8 }), coilVisual(p.cat, { rings:3 })];
+  }
+  const initialColorId = hasVariants ? p.variants.colors[0].id : null;
+  const galleryHTML = galleryHTMLFor(initialColorId);
 
   setTimeout(() => {
-    const thumbs = document.querySelectorAll(".pdp-thumb");
-    const main = document.getElementById("pdpMain");
-    thumbs.forEach(t => t.addEventListener("click", () => {
-      thumbs.forEach(x => x.classList.remove("active"));
-      t.classList.add("active");
-      main.innerHTML = t.innerHTML;
-    }));
+    function bindThumbs(){
+      const thumbs = document.querySelectorAll(".pdp-thumb");
+      const main = document.getElementById("pdpMain");
+      thumbs.forEach(t => t.addEventListener("click", () => {
+        thumbs.forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+        main.innerHTML = t.innerHTML;
+      }));
+    }
+    bindThumbs();
 
     let qty = 1;
     const qtyLabel = document.getElementById("qtyLabel");
     document.getElementById("qtyInc").addEventListener("click", () => { qty++; qtyLabel.textContent = qty; });
     document.getElementById("qtyDec").addEventListener("click", () => { qty = Math.max(1, qty - 1); qtyLabel.textContent = qty; });
-    document.getElementById("pdpAdd").addEventListener("click", () => addToBag(p.slug, qty));
+
+    if (hasVariants){
+      let selectedColor = p.variants.colors[0].id;
+      let selectedSize = p.variants.sizes[0].id;
+      const priceEl = document.getElementById("pdpPrice");
+      const mainEl = document.getElementById("pdpMain");
+      const thumbsWrap = document.getElementById("pdpThumbs");
+
+      function currentSizeObj(){ return p.variants.sizes.find(s => s.id === selectedSize); }
+      function refreshPrice(){ priceEl.textContent = fmtPrice(currentSizeObj().price); }
+      function refreshGallery(){
+        const imgs = galleryHTMLFor(selectedColor);
+        mainEl.innerHTML = imgs[0];
+        thumbsWrap.innerHTML = imgs.map((g,i) => `<div class="pdp-thumb ${i===0?'active':''}">${g}</div>`).join("");
+        bindThumbs();
+      }
+
+      document.querySelectorAll("[data-color]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedColor = btn.dataset.color;
+          document.querySelectorAll("[data-color]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          refreshGallery();
+        });
+      });
+      document.querySelectorAll("[data-size]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedSize = btn.dataset.size;
+          document.querySelectorAll("[data-size]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          refreshPrice();
+        });
+      });
+
+      document.getElementById("pdpAdd").addEventListener("click", () => {
+        const sizeObj = currentSizeObj();
+        const colorObj = p.variants.colors.find(c => c.id === selectedColor);
+        const colorSuffix = p.variants.colors.length > 1 ? ` — ${colorObj.label}` : "";
+        addToBag({
+          slug: p.slug,
+          key: `${p.slug}|${selectedColor}|${selectedSize}`,
+          name: `${p.name} — ${sizeObj.label}${colorSuffix}`,
+          price: sizeObj.price,
+          cat: p.cat,
+          image: colorObj.images?.[0],
+        }, qty);
+      });
+    } else {
+      document.getElementById("pdpAdd").addEventListener("click", () => {
+        addToBag({ slug: p.slug, key: p.slug, name: p.name, price: p.price, cat: p.cat, image: p.images?.[0] }, qty);
+      });
+    }
 
     bindCardEvents(document.getElementById("relatedGrid"));
   }, 0);
+
+  const variantHTML = hasVariants ? `
+    ${p.variants.colors.length > 1 ? `
+    <div style="margin-bottom:20px;">
+      <div class="k" style="font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:8px;">Colour</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        ${p.variants.colors.map((c,i) => `
+          <button data-color="${c.id}" class="filter-pill${i===0?' active':''}" style="display:flex; align-items:center; gap:8px;">
+            <span style="width:14px; height:14px; border-radius:50%; background:${c.swatch}; display:inline-block; border:1px solid var(--line);"></span>
+            ${c.label}
+          </button>`).join("")}
+      </div>
+    </div>` : ""}
+    <div style="margin-bottom:24px;">
+      <div class="k" style="font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:8px;">Size</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        ${p.variants.sizes.map((s,i) => `
+          <button data-size="${s.id}" class="filter-pill${i===0?' active':''}">${s.label} — ${fmtPrice(s.price)}</button>`).join("")}
+      </div>
+    </div>
+  ` : "";
 
   return `
     <section class="pdp">
@@ -1116,16 +1241,18 @@ function renderProduct(slug){
         </div>
         <div class="pdp-grid">
           <div class="reveal show">
-            <div class="pdp-gallery-main" id="pdpMain">${coilVisual(p.cat, gallery[0])}</div>
-            <div class="pdp-thumbs">
-              ${gallery.map((g, i) => `<div class="pdp-thumb ${i===0?'active':''}">${coilVisual(p.cat, g)}</div>`).join("")}
+            <div class="pdp-gallery-main" id="pdpMain">${galleryHTML[0]}</div>
+            <div class="pdp-thumbs" id="pdpThumbs">
+              ${galleryHTML.map((g, i) => `<div class="pdp-thumb ${i===0?'active':''}">${g}</div>`).join("")}
             </div>
           </div>
           <div class="pdp-info reveal show">
             <div class="card-cat">${catLabel(p.cat)}</div>
             <h1>${p.name}</h1>
-            <div class="pdp-price">${fmtPrice(p.price)}</div>
+            <div class="pdp-price" id="pdpPrice">${hasVariants ? fmtPrice(p.variants.sizes[0].price) : fmtPrice(p.price)}</div>
             <p class="pdp-desc">${p.desc}</p>
+
+            ${variantHTML}
 
             <div class="pdp-specs">
               <div class="spec-row"><span class="k">Size</span><span class="v">${p.size}</span></div>
