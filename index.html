@@ -429,6 +429,8 @@
    ========================================================================= */
 const STORE = { name: "Crafts of Pakistan", currency: "PKR", saleActive: false };
 const CONTACT = { whatsapp: "923215282064", email: "craftsofpakistanbyarshi@gmail.com" };
+const SUPABASE_URL = "https://imdxhiyvnkmsjgmzmkgq.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_O8jiHptPH7BBSFXZ6CigBA_YwVoFtXO";
 document.getElementById("saleBanner").style.display = STORE.saleActive ? "block" : "none";
 
 const CATEGORIES = [
@@ -470,10 +472,10 @@ const PRODUCTS = [
   { slug:"crochet-baskets", name:"Crochet Baskets", cat:"basket", size:"See size options", desc:"Hand-crocheted date palm leaf baskets with a scalloped shell-stitch rim in a contrast tone. Sold individually in three sizes, or as a nesting set of all three.", bestseller:true,
     variants:{
       colors:[
-        { id:"charcoal", label:"Natural / Charcoal", swatch:"#2b2420", images:["images/crochet-basket-blackstack.jpg","images/crochet-basket-blacksplaed.jpg","images/crochet-basket-blacktower.jpg"] },
-        { id:"navy",     label:"Natural / Navy",      swatch:"#28304f", images:["images/crochet-basket-navy-stacked.jpg","images/crochet-basket-navy-splayed.jpg","images/crochet-basket-navy-tower.jpg"] },
-        { id:"pink",     label:"Natural / Pink",      swatch:"#c22e83", images:["images/crochet-basket-pink-stacked.jpg","images/crochet-basket-pink-splayed.jpg","images/crochet-basket-pink-tower.jpg"] },
-        { id:"green",    label:"Natural / Green",     swatch:"#0e6b52", images:["images/crochet-basket-green-stack.jpg","images/crochet-basket-green-splayed.jpg","images/crochet-basket-green-tower.jpg"] },
+        { id:"charcoal", label:"Natural / Charcoal", swatch:"#2b2420", images:["images/crochet-basket-01.jpg","images/crochet-basket-04.jpg","images/crochet-basket-06.jpg"] },
+        { id:"navy",     label:"Natural / Navy",      swatch:"#28304f", images:["images/crochet-basket-navy-03.jpg","images/crochet-basket-navy-01.jpg","images/crochet-basket-navy-02.jpg"] },
+        { id:"pink",     label:"Natural / Pink",      swatch:"#c22e83", images:["images/crochet-basket-pink-01.jpg","images/crochet-basket-pink-02.jpg","images/crochet-basket-pink-03.jpg"] },
+        { id:"green",    label:"Natural / Green",     swatch:"#0e6b52", images:["images/crochet-basket-green-01.jpg","images/crochet-basket-green-02.jpg","images/crochet-basket-green-03.jpg"] },
       ],
       sizes:[
         { id:"large",  label:"Large — 10 in",  price:2200 },
@@ -872,16 +874,6 @@ function renderCheckout(){
   const fieldStyle = "width:100%; margin-top:6px; padding:12px 14px; border:1.3px solid var(--ink); border-radius:10px; font-family:var(--font-body); font-size:16px; background:var(--white);";
   const labelStyle = "font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);";
 
-  /* PAYMENT_DETAILS — dummy placeholders, edit to your real account info */
-  const PAYMENT_DETAILS = {
-    bankName: "Meezan Bank",
-    accountTitle: "Arshi — Crafts of Pakistan",
-    accountNumber: "01234567890123",
-    iban: "PK00 MEZN 0001 2345 6789 01",
-    easypaisaTitle: "Arshi",
-    easypaisaNumber: "0321-5282064",
-  };
-
   if (!bag.length){
     return `
       <section class="section" style="padding-top:60px; text-align:center;">
@@ -930,42 +922,50 @@ function renderCheckout(){
     }
     drawSummary();
 
-    function buildOrderText(name, phone, address){
-      const total = bag.reduce((s,i) => s + i.price * i.qty, 0);
-      let lines = [`New order — Crafts of Pakistan`, ``, `Name: ${name}`, `Phone: ${phone}`, `Address: ${address}`, ``, `Items:`];
-      bag.forEach(i => lines.push(`- ${i.name} × ${i.qty} (${fmtPrice(i.price * i.qty)})`));
-      lines.push(``, `Total: ${fmtPrice(total)}`, ``, `Payment receipt emailed separately.`);
-      return lines.join("\n");
-    }
-
     const form = document.getElementById("checkoutForm");
-    const fileInput = document.getElementById("receiptInput");
-    const fileNameLabel = document.getElementById("receiptFileName");
+    const payBtn = document.getElementById("payBtn");
+    const errorBox = document.getElementById("checkoutError");
 
-    fileInput.addEventListener("change", () => {
-      fileNameLabel.textContent = fileInput.files[0] ? fileInput.files[0].name : "No file chosen";
-    });
-
-    form.addEventListener("submit", (e) => {
-      if (!form.reportValidity()){ e.preventDefault(); return; }
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      errorBox.style.display = "none";
 
       const name = form.querySelector("[name='Name']").value.trim();
       const phone = form.querySelector("[name='Phone']").value.trim();
+      const email = form.querySelector("[name='Email']").value.trim();
       const address = form.querySelector("[name='Address']").value.trim();
-      const msg = buildOrderText(name, phone, address);
-      document.getElementById("orderDetailsField").value = msg;
+      const total = bag.reduce((s,i) => s + i.price * i.qty, 0);
 
-      // Open WhatsApp immediately (synchronously, in direct response to the
-      // click) so browsers don't block it as a popup — this can't wait on
-      // the form's own submission below.
-      window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+      payBtn.disabled = true;
+      payBtn.querySelector(".btn-inner").textContent = "Setting up payment…";
 
-      bag = [];
-      updateCartCount();
-      // Not preventing default here — the form submits for real (with the
-      // file attached) to FormSubmit, which then redirects the browser
-      // straight to our own #/order-confirmed page via _next, so no
-      // FormSubmit-branded page is ever shown.
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+            "apikey": SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({
+            customer: { name, phone, email, address },
+            items: bag.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+            total,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.checkoutUrl) throw new Error(data.error || "Something went wrong");
+
+        // Hand off to Safepay's hosted checkout page
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        console.error(err);
+        errorBox.textContent = "We couldn't start the payment. Please check your details and try again, or message us on WhatsApp if this keeps happening.";
+        errorBox.style.display = "block";
+        payBtn.disabled = false;
+        payBtn.querySelector(".btn-inner").textContent = "Pay now";
+      }
     });
   }, 0);
 
@@ -979,35 +979,11 @@ function renderCheckout(){
             <h3 style="font-size:17px; margin-bottom:16px;">Your order</h3>
             <div id="checkoutSummary" style="border-top:1px solid var(--line);"></div>
             <div class="drawer-total" style="margin-top:16px;"><span>Total</span><span id="checkoutTotal">PKR 0</span></div>
-
-            <h3 style="font-size:17px; margin:34px 0 16px;">Pay by bank transfer or Easypaisa</h3>
-            <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; display:flex; flex-direction:column; gap:14px;">
-              <div>
-                <div style="${labelStyle}">Bank transfer</div>
-                <div style="font-size:14px; margin-top:6px; line-height:1.6;">
-                  ${PAYMENT_DETAILS.bankName}<br>
-                  Account title: ${PAYMENT_DETAILS.accountTitle}<br>
-                  Account #: ${PAYMENT_DETAILS.accountNumber}<br>
-                  IBAN: ${PAYMENT_DETAILS.iban}
-                </div>
-              </div>
-              <div style="border-top:1px solid var(--line); padding-top:14px;">
-                <div style="${labelStyle}">Easypaisa</div>
-                <div style="font-size:14px; margin-top:6px; line-height:1.6;">
-                  Account title: ${PAYMENT_DETAILS.easypaisaTitle}<br>
-                  Number: ${PAYMENT_DETAILS.easypaisaNumber}
-                </div>
-              </div>
-            </div>
-            <p class="hint" style="text-align:left; margin-top:10px;">These are placeholder details — swap in your real account info in PAYMENT_DETAILS in the code.</p>
+            <p class="hint" style="text-align:left; margin-top:16px;">Payment is handled securely by Safepay — card, Easypaisa, and bank options appear on the next screen. We never see or store your card details.</p>
           </div>
 
           <div class="reveal show">
-            <form id="checkoutForm" action="https://formsubmit.co/${CONTACT.email}" method="POST" enctype="multipart/form-data" style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:16px;">
-              <input type="hidden" name="_subject" value="New order + receipt — Crafts of Pakistan">
-              <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_next" value="${window.location.origin}${window.location.pathname}#/order-confirmed">
-              <input type="hidden" id="orderDetailsField" name="Order details" value="">
+            <form id="checkoutForm" style="background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:16px;">
               <div>
                 <label style="${labelStyle}">Name</label>
                 <input required name="Name" type="text" style="${fieldStyle}">
@@ -1024,17 +1000,8 @@ function renderCheckout(){
                 <label style="${labelStyle}">Delivery address</label>
                 <textarea required name="Address" rows="3" style="${fieldStyle} resize:vertical;"></textarea>
               </div>
-              <div>
-                <label style="${labelStyle}">Payment receipt screenshot</label>
-                <p style="font-size:12.5px; color:var(--ink-soft); margin:4px 0 8px;">Pay using the details on the left, then upload proof here.</p>
-                <label for="receiptInput" style="display:flex; align-items:center; justify-content:space-between; gap:10px; border:1.3px dashed var(--ink); border-radius:10px; padding:12px 14px; cursor:pointer; font-size:13.5px;">
-                  <span id="receiptFileName" style="color:var(--ink-soft);">No file chosen</span>
-                  <span class="add-btn" style="pointer-events:none;">Choose file</span>
-                </label>
-                <input required id="receiptInput" name="Receipt" type="file" accept="image/*" style="display:none;">
-              </div>
-              <button class="btn btn-primary btn-block" type="submit">Place order via WhatsApp</button>
-              <p class="hint">This opens WhatsApp with your order pre-filled and emails your receipt to the workshop — both in one tap.</p>
+              <div id="checkoutError" style="display:none; background:#fbe4de; color:#8a2d1a; border-radius:10px; padding:12px 14px; font-size:13px;"></div>
+              <button class="btn btn-primary btn-block" id="payBtn" type="submit"><span class="btn-inner">Pay now</span></button>
             </form>
           </div>
         </div>
@@ -1045,12 +1012,57 @@ function renderCheckout(){
 
 
 function renderOrderConfirmed(){
+  const params = new URLSearchParams(window.location.hash.split("?")[1] || "");
+  const orderId = params.get("order_id");
+
+  setTimeout(() => {
+    if (!orderId) return;
+    const statusEl = document.getElementById("orderStatusMsg");
+    const iconEl = document.getElementById("orderStatusIcon");
+    let attempts = 0;
+
+    async function poll(){
+      attempts++;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/get-order-status?order_id=${orderId}`, {
+          headers: { "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "apikey": SUPABASE_ANON_KEY },
+        });
+        const data = await res.json();
+
+        if (data.payment_status === "paid"){
+          iconEl.textContent = "✓";
+          iconEl.style.color = "var(--palm)";
+          statusEl.innerHTML = `<strong>Payment confirmed.</strong><br>Your order is on its way to being made. A confirmation has been sent to your email.`;
+          bag = [];
+          updateCartCount();
+          return;
+        }
+        if (data.payment_status === "failed"){
+          iconEl.textContent = "×";
+          iconEl.style.color = "var(--clay)";
+          statusEl.innerHTML = `<strong>Payment didn't go through.</strong><br>Nothing was charged. Please try again from your bag, or message us on WhatsApp if you keep hitting this.`;
+          return;
+        }
+        if (attempts > 20){
+          statusEl.innerHTML = `Still confirming your payment — this is taking longer than usual. If you completed payment, don't worry, we'll have it shortly. Otherwise, message us on WhatsApp and we'll check.`;
+          return;
+        }
+        setTimeout(poll, 2000);
+      } catch (err) {
+        setTimeout(poll, 2000);
+      }
+    }
+    poll();
+  }, 0);
+
   return `
     <section class="section" style="padding-top:60px; text-align:center; padding-bottom:110px;">
       <div class="wrap">
-        <h2 style="margin-bottom:14px;">Order placed — check WhatsApp</h2>
-        <p style="color:var(--ink-soft); max-width:44ch; margin:0 auto 30px;">Your order and receipt have been emailed to the workshop. WhatsApp should have opened in another tab with your order pre-filled — just hit send there too.</p>
+        <div id="orderStatusIcon" style="font-family:var(--font-display); font-size:52px; color:var(--gold); margin-bottom:14px;">…</div>
+        <h2 style="margin-bottom:14px;">${orderId ? "Confirming your payment" : "Order status"}</h2>
+        <p id="orderStatusMsg" style="color:var(--ink-soft); max-width:44ch; margin:0 auto 30px;">${orderId ? "Just a moment — checking with Safepay…" : "We couldn't find that order."}</p>
         <a class="btn btn-primary" data-route="#/shop">Continue shopping</a>
+
       </div>
     </section>
   `;
